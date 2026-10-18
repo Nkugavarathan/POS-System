@@ -11,6 +11,8 @@ const VARIANTS = {
   danger: "bg-red-600 text-white hover:bg-red-700 disabled:bg-red-600/50",
   ghost: "text-slate-700 hover:bg-slate-100 disabled:text-slate-400",
   success: "bg-emerald-600 text-white hover:bg-emerald-700 disabled:bg-emerald-600/50",
+  // For dark bars (POS header): light text with a subtle hover.
+  inverse: "text-white/90 hover:bg-white/15 hover:text-white disabled:text-white/40",
 };
 
 const SIZES = {

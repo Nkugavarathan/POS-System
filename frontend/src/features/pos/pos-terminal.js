@@ -343,20 +343,20 @@ export function PosTerminal({ user }) {
             {user.fullName} · <Clock />
           </span>
           {shift.data && hasPermission(user, "CASH_MOVEMENT") && (
-            <Button size="sm" variant="ghost" className="text-primary-foreground hover:bg-primary-800" onClick={() => setDialog("cash")}>
+            <Button size="sm" variant="inverse" onClick={() => setDialog("cash")}>
               <Banknote className="h-4 w-4" aria-hidden="true" /> <span className="hidden lg:inline">Cash in/out</span>
             </Button>
           )}
           {shift.data && (
-            <Button size="sm" variant="ghost" className="text-primary-foreground hover:bg-primary-800" onClick={() => setDialog("close")}>
+            <Button size="sm" variant="inverse" onClick={() => setDialog("close")}>
               <Wallet className="h-4 w-4" aria-hidden="true" /> <span className="hidden lg:inline">Close shift</span>
             </Button>
           )}
           {shift.data && (
             <Button
               size="sm"
-              variant={arrivedWaiting ? "secondary" : "ghost"}
-              className={arrivedWaiting ? "animate-pulse" : "text-primary-foreground hover:bg-primary-800"}
+              variant={arrivedWaiting ? "secondary" : "inverse"}
+              className={arrivedWaiting ? "animate-pulse" : undefined}
               onClick={() => setDialog("pickup")}
               title="Online order pickup (F7)"
             >
@@ -367,17 +367,17 @@ export function PosTerminal({ user }) {
               )}
             </Button>
           )}
-          <Button size="sm" variant="ghost" className="text-primary-foreground hover:bg-primary-800" aria-label="Keyboard shortcuts" onClick={() => setDialog("shortcuts")}>
+          <Button size="sm" variant="inverse" aria-label="Keyboard shortcuts" onClick={() => setDialog("shortcuts")}>
             <Keyboard className="h-4 w-4" />
           </Button>
           {hasAny(user, ["DASHBOARD_VIEW", "SALE_VIEW_OWN", "PRODUCT_VIEW"]) && (
             <Link href="/dashboard">
-              <Button size="sm" variant="ghost" className="text-primary-foreground hover:bg-primary-800" aria-label="Back office">
+              <Button size="sm" variant="inverse" aria-label="Back office">
                 <LayoutDashboard className="h-4 w-4" />
               </Button>
             </Link>
           )}
-          <Button size="sm" variant="ghost" className="text-primary-foreground hover:bg-primary-800" aria-label="Sign out" onClick={() => logout.mutate()}>
+          <Button size="sm" variant="inverse" aria-label="Sign out" onClick={() => logout.mutate()}>
             <LogOut className="h-4 w-4" />
           </Button>
         </div>

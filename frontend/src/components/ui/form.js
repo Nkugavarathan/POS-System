@@ -1,6 +1,7 @@
 "use client";
 
-import { forwardRef, useId } from "react";
+import { forwardRef, useId, useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 const control =
@@ -10,6 +11,26 @@ const control =
 
 export const Input = forwardRef(function Input({ className, ...props }, ref) {
   return <input ref={ref} className={cn(control, "h-10", className)} {...props} />;
+});
+
+/** Password field with an eye button to show or hide what was typed. */
+export const PasswordInput = forwardRef(function PasswordInput({ className, ...props }, ref) {
+  const [visible, setVisible] = useState(false);
+  return (
+    <div className="relative">
+      <input ref={ref} type={visible ? "text" : "password"} className={cn(control, "h-10 pr-10", className)} {...props} />
+      <button
+        type="button"
+        onClick={() => setVisible((v) => !v)}
+        className="absolute inset-y-0 right-0 flex w-10 items-center justify-center rounded-r-md text-slate-400 hover:text-slate-700 focus-visible:text-slate-700"
+        aria-label={visible ? "Hide password" : "Show password"}
+        aria-pressed={visible}
+        tabIndex={0}
+      >
+        {visible ? <EyeOff className="h-4 w-4" aria-hidden="true" /> : <Eye className="h-4 w-4" aria-hidden="true" />}
+      </button>
+    </div>
+  );
 });
 
 export const Textarea = forwardRef(function Textarea({ className, rows = 3, ...props }, ref) {

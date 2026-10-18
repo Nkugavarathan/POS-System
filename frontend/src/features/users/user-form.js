@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { Checkbox, Field, Input, Select } from "@/components/ui/form";
+import { Checkbox, Field, Input, PasswordInput, Select } from "@/components/ui/form";
 import { storesApi, userKeys, usersApi } from "./api";
 
 const base = {
@@ -94,7 +94,7 @@ export function UserForm({ user, onSubmit, submitting, setErrorRef }) {
             hint="The user must change it at first sign-in."
             required
           >
-            {(a) => <Input {...a} type="password" autoComplete="new-password" {...register("temporaryPassword")} />}
+            {(a) => <PasswordInput {...a} autoComplete="new-password" {...register("temporaryPassword")} />}
           </Field>
         )}
       </div>

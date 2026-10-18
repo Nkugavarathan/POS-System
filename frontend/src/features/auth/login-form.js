@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Field, Input } from "@/components/ui/form";
+import { Field, Input, PasswordInput } from "@/components/ui/form";
 import { Alert } from "@/components/ui/feedback";
 import { errorMessage } from "@/lib/api-error";
 
@@ -43,7 +43,7 @@ export function LoginForm({ onSubmit, notice }) {
         {(a11y) => <Input {...a11y} autoComplete="username" autoFocus {...register("username")} />}
       </Field>
       <Field label="Password" error={errors.password?.message} required>
-        {(a11y) => <Input {...a11y} type="password" autoComplete="current-password" {...register("password")} />}
+        {(a11y) => <PasswordInput {...a11y} autoComplete="current-password" {...register("password")} />}
       </Field>
       <Button type="submit" className="w-full" size="lg" loading={isSubmitting}>
         Sign in

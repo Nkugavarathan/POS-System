@@ -8,7 +8,7 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { PageHeader, Card, CardHeader } from "@/components/ui/layout";
-import { Field, Input } from "@/components/ui/form";
+import { Field, Input, PasswordInput } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Alert } from "@/components/ui/feedback";
 import { useChangePassword, useMe } from "@/features/auth/hooks";
@@ -63,13 +63,13 @@ function PasswordCard({ mustChange }) {
           </Alert>
         )}
         <Field label="Current password" error={errors.currentPassword?.message} required>
-          {(a) => <Input {...a} type="password" autoComplete="current-password" {...register("currentPassword")} />}
+          {(a) => <PasswordInput {...a} autoComplete="current-password" {...register("currentPassword")} />}
         </Field>
         <Field label="New password" error={errors.newPassword?.message} required>
-          {(a) => <Input {...a} type="password" autoComplete="new-password" {...register("newPassword")} />}
+          {(a) => <PasswordInput {...a} autoComplete="new-password" {...register("newPassword")} />}
         </Field>
         <Field label="Confirm new password" error={errors.confirmPassword?.message} required>
-          {(a) => <Input {...a} type="password" autoComplete="new-password" {...register("confirmPassword")} />}
+          {(a) => <PasswordInput {...a} autoComplete="new-password" {...register("confirmPassword")} />}
         </Field>
         <Button type="submit" loading={change.isPending}>
           Update password
@@ -104,7 +104,7 @@ function PinCard({ user }) {
       />
       <form onSubmit={submit} noValidate className="flex items-end gap-3 p-5">
         <Field label="New PIN" error={errors.pin?.message} className="w-40">
-          {(a) => <Input {...a} type="password" inputMode="numeric" autoComplete="off" maxLength={6} {...register("pin")} />}
+          {(a) => <PasswordInput {...a} inputMode="numeric" autoComplete="off" maxLength={6} {...register("pin")} />}
         </Field>
         <Button type="submit" loading={setPin.isPending}>
           Save PIN

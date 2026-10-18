@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { Field, Input } from "@/components/ui/form";
+import { Field, Input, PasswordInput } from "@/components/ui/form";
 import { Alert } from "@/components/ui/feedback";
 import { errorMessage } from "@/lib/api-error";
 import { shopApi, shopKeys } from "@/features/shop/api";
@@ -62,7 +62,7 @@ function SignIn() {
           {(a11y) => <Input {...a11y} type="email" autoComplete="email" autoFocus {...register("email")} />}
         </Field>
         <Field label="Password" error={errors.password?.message} required>
-          {(a11y) => <Input {...a11y} type="password" autoComplete="current-password" {...register("password")} />}
+          {(a11y) => <PasswordInput {...a11y} autoComplete="current-password" {...register("password")} />}
         </Field>
         <Button type="submit" size="lg" className="w-full rounded-full" loading={isSubmitting}>
           Sign in

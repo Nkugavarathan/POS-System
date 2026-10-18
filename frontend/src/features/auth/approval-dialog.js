@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { ShieldCheck } from "lucide-react";
 import { Modal } from "@/components/ui/dialog";
-import { Field, Input } from "@/components/ui/form";
+import { Field, Input, PasswordInput } from "@/components/ui/form";
 import { Alert } from "@/components/ui/feedback";
 import { Button } from "@/components/ui/button";
 import { authApi } from "./api";
@@ -58,7 +58,7 @@ export function ApprovalDialog({ action, title, description, value, registerId, 
           {(a) => <Input {...a} autoFocus autoComplete="off" value={username} onChange={(e) => setUsername(e.target.value)} />}
         </Field>
         <Field label="PIN or password">
-          {(a) => <Input {...a} type="password" autoComplete="off" value={secret} onChange={(e) => setSecret(e.target.value)} />}
+          {(a) => <PasswordInput {...a} autoComplete="off" value={secret} onChange={(e) => setSecret(e.target.value)} />}
         </Field>
       </form>
     </Modal>

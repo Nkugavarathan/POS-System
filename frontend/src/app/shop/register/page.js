@@ -9,7 +9,7 @@ import { z } from "zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Checkbox, Field, Input } from "@/components/ui/form";
+import { Checkbox, Field, Input, PasswordInput } from "@/components/ui/form";
 import { Alert } from "@/components/ui/feedback";
 import { applyFieldErrors, errorMessage } from "@/lib/api-error";
 import { shopApi, shopKeys } from "@/features/shop/api";
@@ -102,7 +102,7 @@ function Register() {
           </Field>
         </div>
         <Field label="Password" error={errors.password?.message} required hint="8+ characters with a letter and a number">
-          {(a11y) => <Input {...a11y} type="password" autoComplete="new-password" {...register("password")} />}
+          {(a11y) => <PasswordInput {...a11y} autoComplete="new-password" {...register("password")} />}
         </Field>
 
         <div className="rounded-2xl border border-primary-200 bg-primary-50/60 p-4">

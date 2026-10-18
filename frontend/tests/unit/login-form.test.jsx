@@ -18,7 +18,7 @@ describe("LoginForm", () => {
     const onSubmit = vi.fn().mockResolvedValue(undefined);
     render(<LoginForm onSubmit={onSubmit} />);
     await userEvent.type(screen.getByLabelText(/username/i), "  cashier ");
-    await userEvent.type(screen.getByLabelText(/password/i), "Cashier@123");
+    await userEvent.type(screen.getByLabelText(/^password/i), "Cashier@123");
     await userEvent.click(screen.getByRole("button", { name: /sign in/i }));
     expect(onSubmit).toHaveBeenCalledWith({ username: "cashier", password: "Cashier@123" });
   });
@@ -29,8 +29,18 @@ describe("LoginForm", () => {
       .mockRejectedValue(new ApiError({ status: 401, code: "INVALID_CREDENTIALS", message: "Invalid username or password." }));
     render(<LoginForm onSubmit={onSubmit} />);
     await userEvent.type(screen.getByLabelText(/username/i), "x");
-    await userEvent.type(screen.getByLabelText(/password/i), "y");
+    await userEvent.type(screen.getByLabelText(/^password/i), "y");
     await userEvent.click(screen.getByRole("button", { name: /sign in/i }));
     expect(await screen.findByRole("alert")).toHaveTextContent("Invalid username or password.");
+  });
+
+  it("shows and hides the password with the eye button", async () => {
+    render(<LoginForm onSubmit={vi.fn()} />);
+    const field = screen.getByLabelText(/^password/i);
+    expect(field).toHaveAttribute("type", "password");
+    await userEvent.click(screen.getByRole("button", { name: "Show password" }));
+    expect(field).toHaveAttribute("type", "text");
+    await userEvent.click(screen.getByRole("button", { name: "Hide password" }));
+    expect(field).toHaveAttribute("type", "password");
   });
 });

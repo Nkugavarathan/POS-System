@@ -9,7 +9,7 @@ import { PageHeader, Card, CardHeader } from "@/components/ui/layout";
 import { Badge, ErrorState, Skeleton } from "@/components/ui/feedback";
 import { Button } from "@/components/ui/button";
 import { ConfirmDialog, Modal } from "@/components/ui/dialog";
-import { Field, Input } from "@/components/ui/form";
+import { Field, Input, PasswordInput } from "@/components/ui/form";
 import { AuthGate } from "@/features/auth/auth-gate";
 import { useMe } from "@/features/auth/hooks";
 import { UserForm } from "@/features/users/user-form";
@@ -47,7 +47,7 @@ function ResetPasswordDialog({ user, onClose }) {
       }
     >
       <Field label="Temporary password" hint="At least 8 characters with a letter and a digit.">
-        {(a) => <Input {...a} type="password" autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} />}
+        {(a) => <PasswordInput {...a} autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} />}
       </Field>
     </Modal>
   );
