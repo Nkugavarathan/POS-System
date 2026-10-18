@@ -1,0 +1,22 @@
+# Integration tests run against a dedicated, throwaway schema (TEST_DB_URL, usually pos_test).
+# The schema is cleaned and re-migrated once per test JVM. Never point this at real data.
+spring:
+  datasource:
+    url: ${TEST_DB_URL}
+  flyway:
+    clean-disabled: false
+    locations: classpath:db/migration
+
+app:
+  security:
+    cookie-secure: false
+
+management:
+  server:
+    port: 0
+server:
+  port: 0
+
+logging:
+  level:
+    com.supermarket.pos: INFO

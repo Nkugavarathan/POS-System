@@ -1,0 +1,14 @@
+# Production profile: no defaults for secrets, secure cookies, JSON logs, no API docs
+# unless explicitly enabled. DB_URL, DB_USERNAME, DB_PASSWORD, JWT_SECRET and
+# APP_CORS_ALLOWED_ORIGINS must be provided by the environment.
+spring:
+  flyway:
+    clean-disabled: true
+
+app:
+  security:
+    cookie-secure: true
+
+logging:
+  level:
+    com.supermarket.pos: INFO
