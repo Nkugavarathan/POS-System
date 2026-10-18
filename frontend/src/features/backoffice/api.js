@@ -61,3 +61,12 @@ export function todayInput(offsetDays = 0) {
   const pad = (n) => String(n).padStart(2, "0");
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
+
+export const PO_STATUS = {
+  DRAFT: ["Draft", "gray"],
+  ORDERED: ["Ordered", "blue"],
+  PARTIALLY_RECEIVED: ["Part received", "amber"],
+  RECEIVED: ["Received", "green"],
+  CLOSED: ["Closed", "gray"],
+  CANCELLED: ["Cancelled", "red"],
+};

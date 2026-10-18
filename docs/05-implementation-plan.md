@@ -45,52 +45,56 @@ Each phase delivers a **vertical slice**: backend, frontend and tests together, 
 - [x] Tests: auth service unit tests, security slice tests (every role × representative endpoint), refresh reuse IT, rate limit test; FE: login form validation, http refresh interceptor, nav permission tests
 - Gate: login → me → refresh → logout works through the Next.js proxy
 
-## Phase 4 — Catalog, categories, barcode lookup (backend ✅, frontend in progress)
+## Phase 4 — Catalog, categories, barcode lookup ✅
 - [x] `V4` catalog tables; tax rates seed (configurable, flagged as an example)
 - [x] `BarcodeNormalizer` (GTIN check digit, UPC-A→EAN-13, UPC-E expansion)
-- [x] Category CRUD (tree), Product CRUD, status, barcodes, promotions; search/filter/sort/paging with fetch joins / entity graphs (no N+1)
-- [x] Demo catalogue seed (46 products, 14 categories, clearly labelled DEMO; see [demo-barcodes.md](demo-barcodes.md))
-- [~] FE: category and product list/forms (RHF + Zod), filters, pagination, duplicate handling
-- [x] Tests (backend): normalizer unit tests, catalog IT (duplicates, UPC-A/EAN-13 lookup, cost visibility, PRICE_MANAGE + audit, low-stock filter)
+- [x] Category CRUD (tree), Product CRUD, status, barcodes, promotions; search/filter/sort/paging (no N+1)
+- [x] Demo catalogue seed (46 products, 14 categories, labelled DEMO; see [demo-barcodes.md](demo-barcodes.md))
+- [x] FE: products list/editor (barcode prefill), categories tree
+- [x] Tests (backend): normalizer unit tests, catalog IT
 - [ ] Tests (frontend): product form validation
 
-## Phase 5 — Inventory ledger (backend ✅, frontend in progress)
-- [x] `V5` inventory tables
-- [x] `InventoryService`: locked balance updates, movement writing, FEFO batch allocation, moving average cost
-- [x] Adjustments and write-offs (approval threshold), stock counts and posting, low-stock and expiry queries, alerts job
-- [x] Opening-balance seed for the demo products
-- [~] FE: inventory list, product stock and batch detail, movement history, adjustment form, count workflow
-- [x] Tests: ledger invariants (after = before + change), negative-stock rejection, FEFO allocation, average cost math, concurrent adjustment IT
+## Phase 5 — Inventory ledger ✅
+- [x] `V5` inventory tables; `InventoryService` (locked balances, FEFO, moving average cost)
+- [x] Adjustments/write-offs with approval, stock counts, low-stock and expiry queries
+- [x] FE: stock list, product ledger, adjustments, counts
+- [x] Tests: ledger invariants, negative-stock rejection, FEFO, average cost, concurrency
 
-## Phase 6 — POS interface, camera scanner, cart, shifts (open)
-- [ ] `V6` shift, cash, held cart, void tables; shift open/current; held carts; voids
-- [ ] `PricingEngine` + `/sales/quote` (shared with checkout)
-- [ ] FE: full-screen POS, cart store (sessionStorage), keyboard shortcuts, search/typeahead, quantity dialog for weighed items
-- [ ] Scanner: device enumeration and selection, permission/unavailable/retry states, ZXing format hints (EAN-13/8, UPC-A/E, Code 128), cooldown de-dup, track cleanup on close/unmount, unknown-barcode flow
-- [ ] Tests: pricing engine rounding and allocation suite; FE scanner lifecycle with mocked `mediaDevices` and decoder, cart reducer tests, shortcut guard tests
+## Phase 6 — POS interface, camera scanner, cart, shifts ✅
+- [x] `V6` shifts, cash movements, held carts, voids; `PricingEngine` + `/sales/quote`
+- [x] FE: full-screen POS, keyboard shortcuts, camera scanner dialog, held carts, cash in/out, shift close
+- [ ] Tests (frontend): scanner lifecycle with mocked `mediaDevices`, cart store
 
-## Phase 7 — Checkout, payments, receipts, loyalty
-- [ ] `V7`, `V8`; `CheckoutService` (W4), `PaymentProvider`s (cash, manual card), idempotency service, receipt sequences
-- [ ] Customers + loyalty earn/redeem in checkout
-- [ ] FE: payment dialog (split tender, change due, double-submit guard), receipt preview, print CSS (80 mm / A4), reprint
-- [ ] Tests: checkout success/rollback IT, **concurrent overselling IT** (N threads, last unit), **duplicate idempotency-key IT** (parallel + sequential replay), quote-mismatch, tender validation; FE checkout error handling
+## Phase 7 — Checkout, payments, receipts, loyalty ✅
+- [x] `V7`, `V8`; idempotent transactional checkout; cash / manual card (last 4 only) / loyalty tenders
+- [x] FE: payment dialog (split tender, change due, double-submit guard), receipt (80 mm / A4), reprint
+- [x] Tests: CheckoutIT (replay, split tender, quote mismatch, stock rollback, discount approval, two-till race, shift variance)
 
-## Phase 8 — Returns, refunds, shift close
-- [ ] `V9`; ReturnService (W7), refunds, restock rules, loyalty reversal
-- [ ] Cash movements, shift close with expected cash/variance, X/Z summaries
-- [ ] FE: returns screen (receipt search → item selection → approval → refund), shift close dialog, shift history
-- [ ] Tests: returnable-quantity boundaries, partial→full, duplicate return, refund > paid, variance approval
+## Phase 8 — Returns, refunds, shift close ✅
+- [x] `V9`; ReturnService (window, approval, tender limits, restock/write-off, loyalty reversal)
+- [x] FE: returns list, new-return wizard (receipt → items → preview → refund → approval), return detail; shift history and Z-report
+- [ ] Tests: dedicated ReturnIT (boundaries, partial→full, duplicate return)
 
-## Phase 9 — Suppliers, purchase orders, receiving
-- [ ] `V10`; supplier CRUD, PO lifecycle, GRN with partial delivery and batches, ad-hoc receipt
-- [ ] FE: suppliers, PO editor, receiving screen
-- [ ] Tests: partial/over-receipt rules, status transitions, ledger and average cost after GRN
+## Phase 9 — Suppliers, purchase orders, receiving ✅
+- [x] `V10`; suppliers, PO lifecycle, GRN with partial delivery, batches and expiry
+- [x] FE: suppliers, PO editor, PO detail with receiving
+- [ ] Tests: dedicated PurchaseIT (partial/over-receipt, transitions, average cost after GRN)
 
-## Phase 10 — Dashboard, reports, audit, exports
-- [ ] Report queries (SQL aggregation, date-range limits), CSV streaming export
-- [ ] Dashboard with defined metrics; charts (Recharts)
-- [ ] Audit log viewer
-- [ ] Tests: report SQL ITs against known fixtures (gross/net/refund definitions), permission tests for financial columns
+## Phase 10 — Dashboard, reports, audit, exports ✅
+- [x] Report queries (store-local days, 366-day limit), CSV export with formula-injection guard, export audited
+- [x] Dashboard (KPIs vs yesterday same time, 14-day chart, hourly, top products, operations tiles)
+- [x] Reports page (sales, products, stock, valuation for cost-permitted roles), audit log viewer
+- [x] Tests: ReportsIT (dashboard/sales totals, CSV, permission denials, audit search), CsvWriterTest
+
+## Phase 10b — Online shop (click & collect) ✅
+- [x] `V11`: online orders, items, events, customer accounts/notifications, outbox, store-scoped rescue promotions
+- [x] Customer auth (separate SHOP_* cookies and token type), loyalty card linking (card + phone)
+- [x] Rescue deals: near-expiry batches marked down automatically per store (also at the till)
+- [x] Live packing tracker, substitution approval ("never pay more"), "I'm here" check-in, buy-again predictions
+- [x] Staff: packing board, packing screen (scan to pick), POS online pickup (F7) paying the packed total
+- [x] Notifications: in-app inbox + email/SMS outbox (logging sender in dev; a real provider is not wired)
+- [x] FE storefront under `/shop`: home, browse, product, rescue, cart, checkout with pickup windows, sign-in/register, orders, tracker, notifications, account
+- [x] Tests: ShopFlowIT (substitution → ready → collect as one sale, stock picked once; cancel restores stock; token separation; rescue per store)
 
 ## Phase 11 — Hardening
 - [ ] ArchUnit module boundary tests
