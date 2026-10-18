@@ -6,6 +6,7 @@ import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tansta
 import { toast } from "sonner";
 import {
   Banknote,
+  Globe,
   Keyboard,
   LayoutDashboard,
   LogOut,
@@ -44,6 +45,8 @@ import { cartRequest, useCartStore } from "./cart-store";
 import { posApi, posKeys } from "./api";
 import { OpenShiftDialog } from "./open-shift-dialog";
 import { PaymentDialog } from "./payment-dialog";
+import { OnlinePickupDialog } from "./online-pickup-dialog";
+import { fulfilmentApi, fulfilmentKeys } from "@/features/online-orders/api";
 import { CashMovementDialog, CloseShiftDialog, CustomerDialog, HeldCartsDialog, LineEditDialog, ReceiptDialog } from "./dialogs";
 
 const BARCODE_PATTERN = /^\d{8,14}$/;
@@ -77,6 +80,14 @@ export function PosTerminal({ user }) {
 
   const shift = useQuery({ queryKey: posKeys.shift, queryFn: posApi.currentShift, staleTime: 60_000 });
   const registerId = shift.data?.registerId;
+  // Online click & collect: customers who tapped "I'm here" show up on the till.
+  const online = useQuery({
+    queryKey: fulfilmentKeys.summary,
+    queryFn: fulfilmentApi.summary,
+    enabled: Boolean(shift.data),
+    refetchInterval: 15_000,
+  });
+  const arrivedWaiting = online.data?.arrivedWaiting ?? 0;
 
   // ----- server quote (authoritative prices) ----------------------------------------------
   const request = useMemo(() => cartRequest(cart, registerId), [cart, registerId]);
@@ -286,6 +297,7 @@ export function PosTerminal({ user }) {
       F3: () => searchRef.current?.focus(),
       "/": () => searchRef.current?.focus(),
       F4: () => setDialog("customer"),
+      F7: () => setDialog("pickup"),
       F6: () => selected && setLineEdit({ line: selected, mode: "discount" }),
       F8: () => cart.lines.length && hold.mutate(),
       F9: () => setDialog("held"),
@@ -338,6 +350,21 @@ export function PosTerminal({ user }) {
           {shift.data && (
             <Button size="sm" variant="ghost" className="text-primary-foreground hover:bg-primary-800" onClick={() => setDialog("close")}>
               <Wallet className="h-4 w-4" aria-hidden="true" /> <span className="hidden lg:inline">Close shift</span>
+            </Button>
+          )}
+          {shift.data && (
+            <Button
+              size="sm"
+              variant={arrivedWaiting ? "secondary" : "ghost"}
+              className={arrivedWaiting ? "animate-pulse" : "text-primary-foreground hover:bg-primary-800"}
+              onClick={() => setDialog("pickup")}
+              title="Online order pickup (F7)"
+            >
+              <Globe className="h-4 w-4" aria-hidden="true" />
+              <span className="hidden lg:inline">Online pickup</span>
+              {arrivedWaiting > 0 && (
+                <span className="rounded-full bg-white px-1.5 text-xs font-bold text-secondary-800">{arrivedWaiting} here</span>
+              )}
             </Button>
           )}
           <Button size="sm" variant="ghost" className="text-primary-foreground hover:bg-primary-800" aria-label="Keyboard shortcuts" onClick={() => setDialog("shortcuts")}>
@@ -615,6 +642,17 @@ export function PosTerminal({ user }) {
             cart.setCustomer({ ...c, balance: c.pointsBalance ?? c.balance ?? 0, balanceValue: c.pointsValue ?? c.balanceValue ?? "0.00" });
             setDialog(null);
             toast.success(`${c.fullName} attached.`);
+          }}
+        />
+      )}
+      {dialog === "pickup" && registerId && (
+        <OnlinePickupDialog
+          registerId={registerId}
+          onClose={() => setDialog(null)}
+          onCollected={(sale) => {
+            setDialog(null);
+            setReceipt(sale);
+            toast.success(`Online order ${sale.onlineOrderNumber} collected.`);
           }}
         />
       )}

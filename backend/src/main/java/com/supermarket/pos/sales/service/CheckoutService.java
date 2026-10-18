@@ -417,6 +417,6 @@ public class CheckoutService {
         return new LineDto(l.lineNumber(), l.product().getId(), l.product().getName(), l.product().getSku(), l.barcode(),
                 l.product().getUnitOfMeasure().name(), l.quantity(), l.unitPrice(), l.originalUnitPrice(), l.gross(),
                 l.promo(), l.promotion() == null ? null : l.promotion().getName(), l.manual(), l.allocated(), l.net(),
-                l.taxRate(), l.tax(), l.lineTotal(), s == null ? null : s.available(), s == null, null);
+                l.taxRate(), l.tax(), l.lineTotal(), s == null ? null : s.available(), s == null, null, null);
     }
 }

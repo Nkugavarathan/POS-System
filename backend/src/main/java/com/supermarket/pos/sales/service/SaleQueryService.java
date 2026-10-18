@@ -202,6 +202,6 @@ public class SaleQueryService implements ShiftActivity {
                 i.getBarcodeSnapshot(), i.getUnitOfMeasure(), i.getQuantity(), i.getUnitPrice(), i.getOriginalUnitPrice(),
                 i.getGrossAmount(), i.getPromoDiscountAmount(), null, i.getManualDiscountAmount(),
                 i.getAllocatedTxnDiscountAmount(), i.getNetAmount(), i.getTaxRatePercent(), i.getTaxAmount(),
-                i.getLineTotal(), null, true, i.getQuantityReturned());
+                i.getLineTotal(), null, true, i.getQuantityReturned(), i.getId());
     }
 }

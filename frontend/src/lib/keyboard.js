@@ -41,6 +41,7 @@ export const POS_SHORTCUTS = [
   ["F3", "Search / barcode box"],
   ["F4", "Customer"],
   ["F6", "Discount on selected line"],
+  ["F7", "Online order pickup"],
   ["F8", "Hold cart"],
   ["F9", "Held carts"],
   ["F12 / Ctrl+Enter", "Pay"],

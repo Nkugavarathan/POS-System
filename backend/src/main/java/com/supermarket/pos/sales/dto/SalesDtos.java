@@ -62,7 +62,9 @@ public final class SalesDtos {
                           BigDecimal promoDiscount, String promotionName, BigDecimal manualDiscount,
                           BigDecimal allocatedTransactionDiscount, BigDecimal netAmount, BigDecimal taxRatePercent,
                           BigDecimal taxAmount, BigDecimal lineTotal, BigDecimal availableQuantity,
-                          boolean stockSufficient, BigDecimal quantityReturned) {
+                          boolean stockSufficient, BigDecimal quantityReturned,
+                          /* sale_items.id on a completed sale (used by returns); null on a quote */
+                          Long saleItemId) {
     }
 
     public record TotalsDto(BigDecimal subtotal, BigDecimal lineDiscountTotal, BigDecimal transactionDiscountTotal,

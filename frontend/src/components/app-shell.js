@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { LogOut, Menu, Store, X } from "lucide-react";
 import { NAV_SECTIONS } from "@/lib/navigation";
-import { hasAny } from "@/lib/permissions";
+import { hasAny, hasPermission } from "@/lib/permissions";
+import { fulfilmentApi, fulfilmentKeys } from "@/features/online-orders/api";
 import { cn } from "@/lib/cn";
 import { useLogout } from "@/features/auth/hooks";
 import { useSessionStore } from "@/stores/session-store";
@@ -48,6 +49,33 @@ function StoreSwitcher({ user }) {
   );
 }
 
+/** New online orders + customers waiting at the store, refreshed in the background. */
+function OnlineBadge({ user }) {
+  const summary = useQuery({
+    queryKey: fulfilmentKeys.summary,
+    queryFn: fulfilmentApi.summary,
+    enabled: hasPermission(user, "ONLINE_ORDER_MANAGE"),
+    refetchInterval: 20_000,
+  });
+  const fresh = summary.data?.counts?.PLACED ?? 0;
+  const waiting = summary.data?.arrivedWaiting ?? 0;
+  if (!fresh && !waiting) return null;
+  return (
+    <span className="ml-auto flex gap-1">
+      {waiting > 0 && (
+        <span className="rounded-full bg-emerald-600 px-1.5 text-xs font-semibold text-white" title="Customers at the store">
+          {waiting}
+        </span>
+      )}
+      {fresh > 0 && (
+        <span className="rounded-full bg-secondary px-1.5 text-xs font-semibold text-secondary-foreground" title="New orders">
+          {fresh}
+        </span>
+      )}
+    </span>
+  );
+}
+
 function Sidebar({ user, onNavigate }) {
   const pathname = usePathname();
   return (
@@ -59,7 +87,7 @@ function Sidebar({ user, onNavigate }) {
           <div key={section.label} className="mb-5">
             <p className="px-3 text-xs font-semibold uppercase tracking-wider text-slate-400">{section.label}</p>
             <ul className="mt-2 space-y-0.5">
-              {items.map(({ href, label, icon: Icon }) => {
+              {items.map(({ href, label, icon: Icon, badge }) => {
                 const active = pathname === href || pathname.startsWith(`${href}/`);
                 return (
                   <li key={href}>
@@ -74,6 +102,7 @@ function Sidebar({ user, onNavigate }) {
                     >
                       <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
                       {label}
+                      {badge === "online" && <OnlineBadge user={user} />}
                     </Link>
                   </li>
                 );

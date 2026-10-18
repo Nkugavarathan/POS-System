@@ -3,7 +3,9 @@ import {
   Boxes,
   ClipboardList,
   FolderTree,
+  Globe,
   History,
+  Leaf,
   LayoutDashboard,
   Package,
   Receipt,
@@ -27,6 +29,7 @@ export const NAV_SECTIONS = [
     items: [
       { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, anyOf: [] },
       { href: "/pos", label: "Point of sale", icon: ShoppingCart, anyOf: ["POS_SELL"] },
+      { href: "/online-orders", label: "Online orders", icon: Globe, anyOf: ["ONLINE_ORDER_MANAGE"], badge: "online" },
     ],
   },
   {
@@ -44,6 +47,7 @@ export const NAV_SECTIONS = [
       { href: "/products", label: "Products", icon: Package, anyOf: ["PRODUCT_VIEW"] },
       { href: "/categories", label: "Categories", icon: FolderTree, anyOf: ["PRODUCT_VIEW"] },
       { href: "/inventory", label: "Inventory", icon: Boxes, anyOf: ["INVENTORY_VIEW"] },
+      { href: "/rescue-deals", label: "Rescue deals", icon: Leaf, anyOf: ["RESCUE_DEAL_MANAGE", "INVENTORY_VIEW"] },
       { href: "/suppliers", label: "Suppliers", icon: Truck, anyOf: ["SUPPLIER_MANAGE"] },
       { href: "/purchases", label: "Purchase orders", icon: ClipboardList, anyOf: ["PURCHASE_ORDER_MANAGE", "INVENTORY_RECEIVE"] },
     ],
