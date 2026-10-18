@@ -123,6 +123,17 @@ public class InventoryService {
         return result;
     }
 
+    /** Batches of a store that expire on or before {@code until} and still have stock. */
+    @Transactional(readOnly = true)
+    public List<InventoryBatch> expiringBatches(Long storeId, LocalDate until) {
+        return batches.findExpiring(storeId, until);
+    }
+
+    @Transactional(readOnly = true)
+    public java.util.Optional<InventoryBatch> batch(Long batchId) {
+        return batches.findById(batchId);
+    }
+
     /** The batch a document line drew from (e.g. which lot a sold item came out of), if any. */
     @Transactional(readOnly = true)
     public java.util.Optional<Long> batchOf(String referenceType, Long referenceId, Long lineId) {

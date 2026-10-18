@@ -93,6 +93,13 @@ public class StoreService {
 
     // ----- Store profile -------------------------------------------------------------------
 
+    /** Active stores (online shop pickup locations). */
+    @Transactional(readOnly = true)
+    public List<Store> activeStores() {
+        return stores.findAll().stream().filter(Store::isActive)
+                .sorted(java.util.Comparator.comparing(Store::getName)).toList();
+    }
+
     @Transactional(readOnly = true)
     public List<StoreSummaryDto> accessibleStores() {
         CurrentUser user = currentUser.require();

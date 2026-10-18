@@ -139,7 +139,7 @@ public class ProductService implements CategoryUsage {
                     Map.of("productId", product.getId()));
         }
         Instant now = clock.instant();
-        ProductPromotion promo = bestPromotions(List.of(product), now).get(product.getId());
+        ProductPromotion promo = bestPromotions(List.of(product), now, storeId).get(product.getId());
         return ProductMapper.toPos(product, match.getBarcode(), promo,
                 stock.levels(storeId, List.of(product.getId())).get(product.getId()), now);
     }
@@ -156,7 +156,7 @@ public class ProductService implements CategoryUsage {
                 List.of("name,asc")), storeId);
         List<Product> found = page.getContent();
         Instant now = clock.instant();
-        Map<Long, ProductPromotion> promos = bestPromotions(found, now);
+        Map<Long, ProductPromotion> promos = bestPromotions(found, now, storeId);
         Map<Long, StockLevel> levels = stock.levels(storeId, found.stream().map(Product::getId).toList());
         return found.stream()
                 .map(p -> ProductMapper.toPos(p, null, promos.get(p.getId()), levels.get(p.getId()), now))
@@ -183,13 +183,13 @@ public class ProductService implements CategoryUsage {
 
     /** The promotion worth most to the customer per product (largest per-unit discount). */
     @Transactional(readOnly = true)
-    public Map<Long, ProductPromotion> bestPromotions(Collection<Product> forProducts, Instant now) {
+    public Map<Long, ProductPromotion> bestPromotions(Collection<Product> forProducts, Instant now, Long storeId) {
         if (forProducts.isEmpty()) {
             return Map.of();
         }
         Map<Long, Product> byId = forProducts.stream().collect(Collectors.toMap(Product::getId, p -> p, (a, b) -> a));
         Map<Long, ProductPromotion> best = new HashMap<>();
-        for (ProductPromotion promo : promotions.findRunning(byId.keySet(), now)) {
+        for (ProductPromotion promo : promotions.findRunning(byId.keySet(), now, storeId)) {
             Long pid = promo.getProduct().getId();
             BigDecimal value = perUnitDiscount(promo, byId.get(pid).getSellingPrice());
             ProductPromotion current = best.get(pid);
@@ -206,6 +206,46 @@ public class ProductService implements CategoryUsage {
                 ? MoneyPolicy.percentOf(unitPrice, promo.getDiscountValue())
                 : MoneyPolicy.amount(promo.getDiscountValue());
         return d.min(unitPrice);
+    }
+
+    /** Public browse (online shop): active products only, no permission and no cost data involved. */
+    @Transactional(readOnly = true)
+    public Page<Product> browseActive(String q, Long categoryId, Integer page, Integer size, List<String> sort) {
+        return runSearch(new SearchCriteria(q, categoryId, true, null, false, page, size, sort), null);
+    }
+
+    /** Running rescue (near-expiry) promotions of a store, with their products. */
+    @Transactional(readOnly = true)
+    public List<ProductPromotion> runningRescue(Long storeId, Instant now) {
+        return promotions.findRunningRescue(storeId, now);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean hasActiveRescue(Long batchId) {
+        return promotions.existsByBatchIdAndSourceAndActiveTrue(batchId, "RESCUE");
+    }
+
+    /** Creates a store-only promotion for one near-expiry batch (system generated, audited by the caller). */
+    @Transactional
+    public ProductPromotion createRescuePromotion(Long productId, Long storeId, Long batchId, BigDecimal percent,
+                                                  Instant endsAt, String name) {
+        ProductPromotion promo = new ProductPromotion();
+        promo.setProduct(require(productId));
+        promo.setName(name.length() > 100 ? name.substring(0, 100) : name);
+        promo.setDiscountType(ProductPromotion.DiscountType.PERCENT);
+        promo.setDiscountValue(MoneyPolicy.amount(percent));
+        promo.setStartsAt(clock.instant());
+        promo.setEndsAt(endsAt);
+        promo.setStoreId(storeId);
+        promo.setSource("RESCUE");
+        promo.setBatchId(batchId);
+        return promotions.saveAndFlush(promo);
+    }
+
+    /** Ends a rescue promotion early (batch sold out or written off). */
+    @Transactional
+    public void endPromotion(Long promotionId) {
+        promotions.findById(promotionId).ifPresent(p -> p.setActive(false));
     }
 
     /** Active products in a category subtree (or all when {@code categoryId} is null), one query. */

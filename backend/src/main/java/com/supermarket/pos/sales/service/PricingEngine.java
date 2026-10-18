@@ -61,10 +61,10 @@ public class PricingEngine {
     }
 
     @Transactional(readOnly = true)
-    public PricedCart price(List<LineInput> inputs, DiscountRequest transactionDiscount, boolean pricesIncludeTax) {
+    public PricedCart price(Long storeId, List<LineInput> inputs, DiscountRequest transactionDiscount, boolean pricesIncludeTax) {
         Instant now = clock.instant();
         Map<Long, Product> productMap = products.loadForPricing(inputs.stream().map(LineInput::productId).toList());
-        Map<Long, ProductPromotion> promos = products.bestPromotions(productMap.values(), now);
+        Map<Long, ProductPromotion> promos = products.bestPromotions(productMap.values(), now, storeId);
 
         List<PricedLine> stage = new ArrayList<>();
         BigDecimal maxPercent = BigDecimal.ZERO;

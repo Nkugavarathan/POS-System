@@ -15,8 +15,20 @@ public interface ProductPromotionRepository extends JpaRepository<ProductPromoti
             select pr from ProductPromotion pr
             where pr.product.id in :productIds and pr.active = true
               and pr.startsAt <= :now and pr.endsAt > :now
+              and (pr.storeId is null or pr.storeId = :storeId)
             """)
-    List<ProductPromotion> findRunning(@Param("productIds") Collection<Long> productIds, @Param("now") Instant now);
+    List<ProductPromotion> findRunning(@Param("productIds") Collection<Long> productIds, @Param("now") Instant now,
+                                       @Param("storeId") Long storeId);
+
+    @Query("""
+            select pr from ProductPromotion pr join fetch pr.product p
+            where pr.source = 'RESCUE' and pr.active = true and pr.storeId = :storeId
+              and pr.startsAt <= :now and pr.endsAt > :now and p.active = true
+            order by pr.endsAt
+            """)
+    List<ProductPromotion> findRunningRescue(@Param("storeId") Long storeId, @Param("now") Instant now);
+
+    boolean existsByBatchIdAndSourceAndActiveTrue(Long batchId, String source);
 
     List<ProductPromotion> findByProductIdOrderByStartsAtDesc(Long productId);
 }

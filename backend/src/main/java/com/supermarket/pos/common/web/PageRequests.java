@@ -39,16 +39,27 @@ public final class PageRequests {
             if (raw == null || raw.isBlank()) {
                 continue;
             }
-            String[] parts = raw.split(",");
-            String field = parts[0].trim();
-            String property = allowed.get(field);
-            if (property == null) {
-                throw new ApiException(ErrorCode.INVALID_SORT_FIELD, "Sorting by '" + field + "' is not supported.",
-                        Map.of("allowed", allowed.keySet()));
+            for (String part : raw.split(",")) {
+                String token = part.trim();
+                if (token.isEmpty()) {
+                    continue;
+                }
+                // Spring splits a single "name,desc" parameter into ["name", "desc"]: a bare
+                // direction applies to the field before it.
+                if (token.equalsIgnoreCase("asc") || token.equalsIgnoreCase("desc")) {
+                    if (!orders.isEmpty()) {
+                        Sort.Order last = orders.remove(orders.size() - 1);
+                        orders.add(last.with(Sort.Direction.fromString(token)));
+                    }
+                    continue;
+                }
+                String property = allowed.get(token);
+                if (property == null) {
+                    throw new ApiException(ErrorCode.INVALID_SORT_FIELD, "Sorting by '" + token + "' is not supported.",
+                            Map.of("allowed", allowed.keySet()));
+                }
+                orders.add(Sort.Order.asc(property));
             }
-            Sort.Direction direction = parts.length > 1 && "desc".equalsIgnoreCase(parts[1].trim())
-                    ? Sort.Direction.DESC : Sort.Direction.ASC;
-            orders.add(new Sort.Order(direction, property));
         }
         return PageRequest.of(p, s, orders.isEmpty() ? fallback : Sort.by(orders));
     }

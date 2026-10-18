@@ -61,6 +61,17 @@ public class ProductPromotion extends AuditableEntity {
     @Column(name = "created_by")
     private Long createdBy;
 
+    /** null = every store; otherwise only this store (rescue deals are always store-specific). */
+    @Column(name = "store_id")
+    private Long storeId;
+
+    /** MANUAL (created by staff) or RESCUE (generated for a batch close to expiry). */
+    @Column(nullable = false, length = 10)
+    private String source = "MANUAL";
+
+    @Column(name = "batch_id")
+    private Long batchId;
+
     @Version
     private long version;
 

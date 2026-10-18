@@ -3,7 +3,6 @@ package com.supermarket.pos.common.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.core.task.TaskDecorator;
 import org.slf4j.MDC;
@@ -13,12 +12,11 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 
 /**
- * Clock (injected everywhere time matters, for deterministic tests), the async executor
- * used by after-commit event listeners, and scheduling.
+ * Clock (injected everywhere time matters, for deterministic tests), and the async executor
+ * used by after-commit event listeners.
  */
 @Configuration
 @EnableAsync
-@EnableScheduling
 public class CoreConfig {
 
     @Bean

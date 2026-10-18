@@ -47,6 +47,18 @@ public class CategoryService {
                 .toList();
     }
 
+    /** Public (online shop): the tree of active categories only. */
+    @Transactional(readOnly = true)
+    public List<CategoryNodeDto> activeTree() {
+        List<Category> all = categories.findAllWithParent().stream().filter(Category::isActive).toList();
+        Map<Long, Long> counts = usage.activeProductCounts();
+        Map<Long, List<Category>> byParent = new HashMap<>();
+        for (Category c : all) {
+            byParent.computeIfAbsent(c.getParent() == null ? 0L : c.getParent().getId(), k -> new ArrayList<>()).add(c);
+        }
+        return children(0L, byParent, counts);
+    }
+
     @PreAuthorize("hasAuthority('PRODUCT_VIEW')")
     @Transactional(readOnly = true)
     public List<CategoryNodeDto> tree() {

@@ -8,6 +8,8 @@ spring:
     locations: classpath:db/migration
 
 app:
+  scheduling:
+    enabled: false
   security:
     cookie-secure: false
 

@@ -33,6 +33,7 @@ import com.supermarket.pos.store.entity.Store;
 import com.supermarket.pos.store.service.SettingsService;
 import com.supermarket.pos.store.service.StoreService;
 import com.supermarket.pos.users.service.UserAccountService;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -64,7 +65,8 @@ public class ShiftService {
     private final CashMovementRepository cashMovements;
     private final HeldCartRepository heldCarts;
     private final TransactionVoidRepository voids;
-    private final List<ShiftActivity> activities;
+    /** Looked up lazily: activity providers (sales, returns) themselves depend on this service. */
+    private final ObjectProvider<ShiftActivity> activities;
     private final StoreService stores;
     private final SettingsService settings;
     private final SequenceService sequences;
@@ -78,7 +80,7 @@ public class ShiftService {
     private final TransactionTemplate tx;
 
     public ShiftService(CashierShiftRepository shifts, CashMovementRepository cashMovements,
-                        HeldCartRepository heldCarts, TransactionVoidRepository voids, List<ShiftActivity> activities,
+                        HeldCartRepository heldCarts, TransactionVoidRepository voids, ObjectProvider<ShiftActivity> activities,
                         StoreService stores, SettingsService settings, SequenceService sequences,
                         ApprovalService approvals, IdempotencyService idempotency, UserAccountService users,
                         CurrentUserProvider currentUser, AuditService audit, ObjectMapper objectMapper, Clock clock,
@@ -320,7 +322,7 @@ public class ShiftService {
         Map<String, Long> tenderCounts = new HashMap<>();
         Map<String, Long> counters = new HashMap<>();
         Map<String, BigDecimal> amounts = new HashMap<>();
-        for (ShiftActivity activity : activities) {
+        for (ShiftActivity activity : activities.orderedStream().toList()) {
             ShiftActivity.Contribution c = activity.contributionFor(shift.getId());
             cashIn = cashIn.add(c.cashIn());
             cashOut = cashOut.add(c.cashOut());

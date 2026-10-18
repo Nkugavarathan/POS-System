@@ -59,6 +59,15 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
 
     Page<Sale> findByCustomerIdOrderByCompletedAtDesc(Long customerId, Pageable pageable);
 
+    /** product id, number of sales containing it, first and last purchase: a customer's buying rhythm. */
+    @Query("""
+            select si.productId, count(distinct s.id), min(s.completedAt), max(s.completedAt)
+            from SaleItem si join si.sale s
+            where s.customerId = :customerId
+            group by si.productId
+            """)
+    List<Object[]> productHistory(@Param("customerId") Long customerId);
+
     /** tender type, count, sum(amount) for all sales of a shift (X/Z reports, expected cash). */
     @Query("""
             select p.tenderType, count(p), sum(p.amount) from Payment p, Sale s

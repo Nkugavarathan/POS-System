@@ -11,3 +11,13 @@ export function useDebouncedValue(value, delay = 300) {
   }, [value, delay]);
   return debounced;
 }
+
+/**
+ * False during server rendering and the first client render, true afterwards. Use it to
+ * show browser-only state (a persisted basket) without hydration mismatches.
+ */
+export function useMounted() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  return mounted;
+}

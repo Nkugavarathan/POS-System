@@ -24,7 +24,21 @@ export const http = axios.create(config);
 const raw = axios.create(config);
 
 const UNSAFE = new Set(["post", "put", "patch", "delete"]);
-const SESSION_ENDPOINTS = ["/auth/login", "/auth/refresh", "/auth/logout", "/auth/csrf"];
+const SESSION_ENDPOINTS = [
+  "/auth/login",
+  "/auth/refresh",
+  "/auth/logout",
+  "/auth/csrf",
+  "/shop/auth/login",
+  "/shop/auth/register",
+  "/shop/auth/refresh",
+  "/shop/auth/logout",
+];
+
+/** Online-shop calls use the customer session (SHOP_* cookies), never the staff one. */
+function isShopUrl(url = "") {
+  return url.startsWith("/shop/");
+}
 
 let sessionExpiredHandler = () => {};
 /** Called once when the session can no longer be refreshed (the app redirects to /login). */
@@ -48,17 +62,18 @@ export async function ensureCsrfToken(force = false) {
   }
 }
 
-let refreshPromise = null;
-function refreshSession() {
-  if (!refreshPromise) {
-    refreshPromise = (async () => {
+// One in-flight refresh per session kind, shared by every request that hit a 401.
+const refreshPromises = { staff: null, shop: null };
+function refreshSession(kind) {
+  if (!refreshPromises[kind]) {
+    refreshPromises[kind] = (async () => {
       await ensureCsrfToken();
-      await raw.post("/auth/refresh");
+      await raw.post(kind === "shop" ? "/shop/auth/refresh" : "/auth/refresh");
     })().finally(() => {
-      refreshPromise = null;
+      refreshPromises[kind] = null;
     });
   }
-  return refreshPromise;
+  return refreshPromises[kind];
 }
 
 function isSessionEndpoint(url = "") {
@@ -98,14 +113,16 @@ http.interceptors.response.use(
 
     if (status === 401 && !isSessionEndpoint(original.url) && !original._authRetried) {
       original._authRetried = true;
+      const shop = isShopUrl(original.url);
       try {
-        await refreshSession();
+        await refreshSession(shop ? "shop" : "staff");
       } catch {
         // Another tab may have rotated the token a moment ago; its new cookies are ours too.
         try {
           return await raw(original);
         } catch {
-          sessionExpiredHandler();
+          // A signed-out shopper is normal; only the back office redirects to its login.
+          if (!shop) sessionExpiredHandler();
           return Promise.reject(toApiError(error));
         }
       }

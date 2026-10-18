@@ -38,4 +38,12 @@ class PageRequestsTest {
                 .extracting(e -> ((ApiException) e).getCode())
                 .isEqualTo(ErrorCode.INVALID_SORT_FIELD);
     }
+
+    @Test
+    void acceptsTheFieldAndDirectionSplitIntoSeparateValues() {
+        // What Spring binds for ?sort=price,desc&sort=name
+        Pageable p = PageRequests.of(0, 10, List.of("price", "desc", "name"), ALLOWED, Sort.unsorted());
+        assertThat(p.getSort().getOrderFor("sellingPrice").getDirection()).isEqualTo(Sort.Direction.DESC);
+        assertThat(p.getSort().getOrderFor("name").getDirection()).isEqualTo(Sort.Direction.ASC);
+    }
 }

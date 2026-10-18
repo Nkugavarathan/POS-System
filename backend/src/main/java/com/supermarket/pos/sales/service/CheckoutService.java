@@ -134,7 +134,7 @@ public class CheckoutService {
         CurrentUser user = currentUser.require();
         Long storeId = user.requireActiveStore();
         Store store = stores.requireStore(storeId);
-        PricedCart cart = pricing.price(inputs(request.items()), request.transactionDiscount(), store.isPricesIncludeTax());
+        PricedCart cart = pricing.price(storeId, inputs(request.items()), request.transactionDiscount(), store.isPricesIncludeTax());
 
         List<RequiredApproval> required = requiredApprovals(cart, user).stream()
                 .map(r -> new RequiredApproval(r.action().name(), r.value(), r.reason(),
@@ -180,7 +180,7 @@ public class CheckoutService {
         Long storeId = user.requireActiveStore();
         CashierShift shift = shifts.lockOpenShift(user.id(), storeId, request.registerId());
         Store store = stores.requireStore(storeId);
-        PricedCart cart = pricing.price(inputs(request.items()), request.transactionDiscount(), store.isPricesIncludeTax());
+        PricedCart cart = pricing.price(storeId, inputs(request.items()), request.transactionDiscount(), store.isPricesIncludeTax());
 
         // Approvals are consumed inside this transaction: if anything later fails, they stay unused.
         Map<ApprovalAction, ConsumedApproval> consumed = new LinkedHashMap<>();
