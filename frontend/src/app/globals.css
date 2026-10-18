@@ -1,16 +1,48 @@
 @import "tailwindcss";
 
-/* Design tokens. Neutral slate UI with a teal brand accent (no retailer branding). */
+/*
+ * ===== THEME =====================================================================
+ * Change these two colours to re-brand the whole application (POS, back office and
+ * online shop). Every shade (primary-50 ... primary-900) is derived from them.
+ *
+ *   bg-primary / text-primary / border-primary        the base colour
+ *   bg-primary-50 ... bg-primary-900                  lighter / darker shades
+ *   text-primary-foreground                           readable text on bg-primary
+ *   (same for secondary)
+ */
+:root {
+  --primary: #0f766e;            /* teal */
+  --primary-foreground: #ffffff;
+  --secondary: #f59e0b;          /* amber */
+  --secondary-foreground: #1c1917;
+}
+
 @theme {
-  --color-brand-50: #f0fdfa;
-  --color-brand-100: #ccfbf1;
-  --color-brand-200: #99f6e4;
-  --color-brand-300: #5eead4;
-  --color-brand-500: #14b8a6;
-  --color-brand-600: #0d9488;
-  --color-brand-700: #0f766e;
-  --color-brand-800: #115e59;
-  --color-brand-900: #134e4a;
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-50: color-mix(in oklab, var(--primary) 6%, white);
+  --color-primary-100: color-mix(in oklab, var(--primary) 12%, white);
+  --color-primary-200: color-mix(in oklab, var(--primary) 25%, white);
+  --color-primary-300: color-mix(in oklab, var(--primary) 45%, white);
+  --color-primary-400: color-mix(in oklab, var(--primary) 70%, white);
+  --color-primary-500: color-mix(in oklab, var(--primary) 88%, white);
+  --color-primary-600: var(--primary);
+  --color-primary-700: color-mix(in oklab, var(--primary) 85%, black);
+  --color-primary-800: color-mix(in oklab, var(--primary) 70%, black);
+  --color-primary-900: color-mix(in oklab, var(--primary) 55%, black);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-50: color-mix(in oklab, var(--secondary) 8%, white);
+  --color-secondary-100: color-mix(in oklab, var(--secondary) 16%, white);
+  --color-secondary-200: color-mix(in oklab, var(--secondary) 30%, white);
+  --color-secondary-300: color-mix(in oklab, var(--secondary) 50%, white);
+  --color-secondary-400: color-mix(in oklab, var(--secondary) 75%, white);
+  --color-secondary-500: var(--secondary);
+  --color-secondary-600: color-mix(in oklab, var(--secondary) 88%, black);
+  --color-secondary-700: color-mix(in oklab, var(--secondary) 72%, black);
+  --color-secondary-800: color-mix(in oklab, var(--secondary) 58%, black);
+  --color-secondary-900: color-mix(in oklab, var(--secondary) 45%, black);
 
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
@@ -38,7 +70,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-brand-600);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 

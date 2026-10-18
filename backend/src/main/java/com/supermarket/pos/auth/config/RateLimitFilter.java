@@ -31,7 +31,11 @@ public class RateLimitFilter extends OncePerRequestFilter {
     private static final Map<String, Rule> RULES = Map.of(
             "/api/v1/auth/login", new Rule("/api/v1/auth/login", 10, Duration.ofMinutes(1)),
             "/api/v1/auth/refresh", new Rule("/api/v1/auth/refresh", 60, Duration.ofMinutes(1)),
-            "/api/v1/approvals", new Rule("/api/v1/approvals", 10, Duration.ofMinutes(1)));
+            "/api/v1/approvals", new Rule("/api/v1/approvals", 10, Duration.ofMinutes(1)),
+            "/api/v1/shop/auth/login", new Rule("/api/v1/shop/auth/login", 10, Duration.ofMinutes(1)),
+            "/api/v1/shop/auth/register", new Rule("/api/v1/shop/auth/register", 5, Duration.ofMinutes(10)),
+            "/api/v1/shop/auth/refresh", new Rule("/api/v1/shop/auth/refresh", 60, Duration.ofMinutes(1)),
+            "/api/v1/shop/orders", new Rule("/api/v1/shop/orders", 20, Duration.ofMinutes(10)));
 
     private static final int MAX_TRACKED_CLIENTS = 50_000;
 

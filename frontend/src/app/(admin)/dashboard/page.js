@@ -22,8 +22,8 @@ export default function DashboardPage() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {shortcuts.map(({ href, label, icon: Icon }) => (
             <Link key={href} href={href} className="group">
-              <Card className="flex items-center gap-3 p-4 transition group-hover:border-brand-300 group-hover:shadow">
-                <span className="flex h-9 w-9 items-center justify-center rounded-md bg-brand-50 text-brand-700">
+              <Card className="flex items-center gap-3 p-4 transition group-hover:border-primary-300 group-hover:shadow">
+                <span className="flex h-9 w-9 items-center justify-center rounded-md bg-primary-50 text-primary-700">
                   <Icon className="h-5 w-5" aria-hidden="true" />
                 </span>
                 <span className="text-sm font-medium text-slate-800">{label}</span>

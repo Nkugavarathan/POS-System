@@ -31,10 +31,10 @@ function LoginContent() {
 
 export default function LoginPage() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-100 to-brand-50 px-4">
+    <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-100 to-primary-50 px-4">
       <div className="w-full max-w-sm">
         <div className="mb-6 text-center">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-brand-700 text-lg font-bold text-white">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-lg font-bold text-primary-foreground">
             P
           </div>
           <h1 className="mt-4 text-2xl font-semibold text-slate-900">Supermarket POS</h1>

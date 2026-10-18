@@ -5,7 +5,7 @@ import { cn } from "@/lib/cn";
 
 const control =
   "block w-full rounded-md border border-slate-300 bg-white px-3 text-sm text-slate-900 shadow-sm " +
-  "placeholder:text-slate-400 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/20 " +
+  "placeholder:text-slate-400 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-600/20 " +
   "disabled:bg-slate-100 disabled:text-slate-500 aria-[invalid=true]:border-red-500";
 
 export const Input = forwardRef(function Input({ className, ...props }, ref) {
@@ -59,7 +59,7 @@ export function Field({ label, error, hint, required, children, className }) {
 export function Checkbox({ label, className, ...props }) {
   return (
     <label className={cn("inline-flex items-center gap-2 text-sm text-slate-700", className)}>
-      <input type="checkbox" className="h-4 w-4 rounded border-slate-300 text-brand-700 focus:ring-brand-600" {...props} />
+      <input type="checkbox" className="h-4 w-4 rounded border-slate-300 text-primary-700 focus:ring-primary-600" {...props} />
       {label}
     </label>
   );

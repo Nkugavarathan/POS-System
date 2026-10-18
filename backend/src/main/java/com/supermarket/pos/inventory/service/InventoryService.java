@@ -123,6 +123,15 @@ public class InventoryService {
         return result;
     }
 
+    /** The batch a document line drew from (e.g. which lot a sold item came out of), if any. */
+    @Transactional(readOnly = true)
+    public java.util.Optional<Long> batchOf(String referenceType, Long referenceId, Long lineId) {
+        return movements.findByReferenceTypeAndReferenceIdOrderByIdAsc(referenceType, referenceId).stream()
+                .filter(m -> lineId.equals(m.getReferenceLineId()) && m.getBatchId() != null)
+                .map(StockMovement::getBatchId)
+                .findFirst();
+    }
+
     // ----- writes -----------------------------------------------------------------------------
 
     @Transactional(propagation = Propagation.MANDATORY)

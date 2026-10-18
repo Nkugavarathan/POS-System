@@ -76,6 +76,16 @@ public class StoreService {
         return register;
     }
 
+    /** register id → register code. */
+    @Transactional(readOnly = true)
+    public Map<Long, String> registerCodes(Collection<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return Map.of();
+        }
+        return registers.findAllById(new java.util.HashSet<>(ids)).stream()
+                .collect(Collectors.toMap(Register::getId, Register::getCode));
+    }
+
     /** Today's business date in the store's timezone (receipt numbers, daily reports). */
     public LocalDate businessDate(Store store, java.time.Instant instant) {
         return instant.atZone(ZoneId.of(store.getTimezone())).toLocalDate();

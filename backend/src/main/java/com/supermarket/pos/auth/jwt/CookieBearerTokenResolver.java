@@ -28,14 +28,19 @@ public class CookieBearerTokenResolver implements BearerTokenResolver {
             return fromHeader;
         }
         String path = request.getRequestURI();
-        if (isSessionEndpoint(path)) {
+        if (isSessionEndpoint(path) || path.startsWith("/api/v1/shop/public/")) {
             return null;
         }
-        return cookies.read(request, AuthCookies.ACCESS_COOKIE).orElse(null);
+        // The online shop and the back office use separate cookies, so a browser signed in to both
+        // never sends a staff token to the shop (or the other way round).
+        String cookie = path.startsWith("/api/v1/shop/") ? AuthCookies.SHOP_ACCESS_COOKIE : AuthCookies.ACCESS_COOKIE;
+        return cookies.read(request, cookie).orElse(null);
     }
 
     public static boolean isSessionEndpoint(String path) {
         return path.equals("/api/v1/auth/login") || path.equals("/api/v1/auth/refresh")
-                || path.equals("/api/v1/auth/logout") || path.equals("/api/v1/auth/csrf");
+                || path.equals("/api/v1/auth/logout") || path.equals("/api/v1/auth/csrf")
+                || path.equals("/api/v1/shop/auth/login") || path.equals("/api/v1/shop/auth/register")
+                || path.equals("/api/v1/shop/auth/refresh") || path.equals("/api/v1/shop/auth/logout");
     }
 }

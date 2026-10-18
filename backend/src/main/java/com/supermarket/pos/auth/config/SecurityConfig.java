@@ -51,6 +51,11 @@ import java.util.Locale;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    /** Every staff token carries this authority; customer tokens never do. */
+    public static final String STAFF = "STAFF";
+    /** Online-shop customers: only /api/v1/shop/** accepts it. */
+    public static final String CUSTOMER = "CUSTOMER";
+
     private static final String[] PUBLIC_DOCS = {"/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html"};
 
     @Bean
@@ -81,9 +86,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/login", "/api/v1/auth/refresh",
                                 "/api/v1/auth/logout").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/auth/csrf").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/shop/auth/login", "/api/v1/shop/auth/register",
+                                "/api/v1/shop/auth/refresh", "/api/v1/shop/auth/logout").permitAll()
+                        .requestMatchers("/api/v1/shop/public/**").permitAll()
+                        .requestMatchers("/api/v1/shop/**").hasAuthority(CUSTOMER)
                         .requestMatchers(PUBLIC_DOCS).permitAll()
                         .requestMatchers("/error").permitAll()
-                        .requestMatchers("/api/**").authenticated()
+                        .requestMatchers("/api/**").hasAuthority(STAFF)
                         .anyRequest().denyAll())
                 .oauth2ResourceServer(rs -> rs
                         .bearerTokenResolver(new CookieBearerTokenResolver(cookies))
@@ -123,6 +132,11 @@ public class SecurityConfig {
     static Converter<Jwt, AbstractAuthenticationToken> authenticationConverter() {
         return jwt -> {
             List<GrantedAuthority> authorities = new ArrayList<>();
+            if (JwtClaims.TYPE_CUSTOMER.equals(jwt.getClaimAsString(JwtClaims.TOKEN_TYPE))) {
+                authorities.add(new SimpleGrantedAuthority(CUSTOMER));
+                return new JwtAuthenticationToken(jwt, authorities, jwt.getSubject());
+            }
+            authorities.add(new SimpleGrantedAuthority(STAFF));
             claimList(jwt, JwtClaims.PERMISSIONS).forEach(p -> authorities.add(new SimpleGrantedAuthority(p)));
             claimList(jwt, JwtClaims.ROLES).forEach(r -> authorities.add(new SimpleGrantedAuthority("ROLE_" + r)));
             return new JwtAuthenticationToken(jwt, authorities, jwt.getClaimAsString(JwtClaims.USERNAME));

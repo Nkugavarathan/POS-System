@@ -72,7 +72,7 @@ export function ConfirmDialog({
           {children && <div className="mt-3">{children}</div>}
           <div className="mt-5 flex justify-end gap-2">
             <AlertDialogPrimitive.Cancel asChild>
-              <Button variant="secondary" disabled={loading}>
+              <Button variant="outline" disabled={loading}>
                 {cancelLabel}
               </Button>
             </AlertDialogPrimitive.Cancel>

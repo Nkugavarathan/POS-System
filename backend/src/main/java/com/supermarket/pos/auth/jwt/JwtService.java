@@ -70,13 +70,32 @@ public class JwtService {
                 .claim(JwtClaims.PERMISSIONS, List.copyOf(subject.permissions()))
                 .claim(JwtClaims.STORES, List.copyOf(subject.storeIds()))
                 .claim(JwtClaims.SESSION_FAMILY, subject.sessionFamily())
-                .claim(JwtClaims.MUST_CHANGE_PASSWORD, subject.mustChangePassword());
+                .claim(JwtClaims.MUST_CHANGE_PASSWORD, subject.mustChangePassword())
+                .claim(JwtClaims.TOKEN_TYPE, JwtClaims.TYPE_STAFF);
         if (subject.defaultStoreId() != null) {
             claims.claim(JwtClaims.DEFAULT_STORE, subject.defaultStoreId());
         }
         JwsHeader header = JwsHeader.with(MacAlgorithm.HS256).build();
         String token = encoder.encode(JwtEncoderParameters.from(header, claims.build())).getTokenValue();
         return new IssuedToken(token, expiresAt);
+    }
+
+    /** Access token for an online-shop customer: no staff roles or permissions, ever. */
+    public IssuedToken issueCustomerToken(Long accountId, Long customerId, String fullName, String email) {
+        Instant now = clock.instant();
+        Instant expiresAt = now.plus(properties.security().accessTokenTtl());
+        JwtClaimsSet claims = JwtClaimsSet.builder()
+                .issuer(ISSUER)
+                .subject(String.valueOf(accountId))
+                .issuedAt(now)
+                .expiresAt(expiresAt)
+                .claim(JwtClaims.TOKEN_TYPE, JwtClaims.TYPE_CUSTOMER)
+                .claim(JwtClaims.CUSTOMER_ID, customerId)
+                .claim(JwtClaims.FULL_NAME, fullName)
+                .claim(JwtClaims.USERNAME, email)
+                .build();
+        JwsHeader header = JwsHeader.with(MacAlgorithm.HS256).build();
+        return new IssuedToken(encoder.encode(JwtEncoderParameters.from(header, claims)).getTokenValue(), expiresAt);
     }
 
     public JwtDecoder decoder() {

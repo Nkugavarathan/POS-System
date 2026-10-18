@@ -84,7 +84,7 @@ function UsersTable() {
               {data.content.map((u) => (
                 <tr key={u.id} className="hover:bg-slate-50">
                   <Td>
-                    <Link href={`/users/${u.id}`} className="font-medium text-brand-700 hover:underline">
+                    <Link href={`/users/${u.id}`} className="font-medium text-primary-700 hover:underline">
                       {u.fullName}
                     </Link>
                     <p className="text-xs text-slate-500">{u.username}</p>
@@ -143,7 +143,7 @@ export default function UsersPage() {
             onClick={() => setTab(id)}
             className={
               "-mb-px border-b-2 px-4 py-2 text-sm font-medium " +
-              (tab === id ? "border-brand-700 text-brand-800" : "border-transparent text-slate-500 hover:text-slate-800")
+              (tab === id ? "border-primary-700 text-primary-800" : "border-transparent text-slate-500 hover:text-slate-800")
             }
           >
             {label}

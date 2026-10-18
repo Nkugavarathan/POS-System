@@ -131,7 +131,7 @@ function RegisterDialog({ storeId, register, onClose }) {
       title={register ? `Edit register ${register.code}` : "New register"}
       footer={
         <>
-          <Button variant="secondary" onClick={onClose}>
+          <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
           <Button onClick={() => save.mutate()} loading={save.isPending} disabled={!code.trim() || !name.trim()}>
@@ -164,7 +164,7 @@ function Registers({ storeId, canEdit }) {
         description="Checkout terminals. A cashier opens a shift on one register at a time."
         actions={
           canEdit && (
-            <Button size="sm" variant="secondary" onClick={() => setEditing(null)}>
+            <Button size="sm" variant="outline" onClick={() => setEditing(null)}>
               <Plus className="h-4 w-4" aria-hidden="true" /> Add register
             </Button>
           )
@@ -254,7 +254,7 @@ function BusinessSettings({ canEdit }) {
               <div>
                 <p className="text-sm text-slate-800">{SETTING_LABELS[s.key] ?? s.key}</p>
                 <p className="text-xs text-slate-400">
-                  {s.key} · <Badge color={s.scope === "STORE" ? "brand" : "gray"}>{s.scope.toLowerCase()}</Badge>
+                  {s.key} · <Badge color={s.scope === "STORE" ? "primary" : "gray"}>{s.scope.toLowerCase()}</Badge>
                 </p>
               </div>
               {s.valueType === "BOOLEAN" ? (

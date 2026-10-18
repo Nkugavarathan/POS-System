@@ -154,6 +154,12 @@ public class StockAdjustmentService {
         BigDecimal threshold = settings.decimal(storeId, "inventory.writeOffApprovalThreshold", new BigDecimal("5000"));
         ApprovalService.ConsumedApproval approval = null;
         if (writeOff && adjustment.getTotalValue().compareTo(threshold) > 0 && !user.has("INVENTORY_APPROVE")) {
+            if (request.approvalToken() == null || request.approvalToken().isBlank()) {
+                throw new ApiException(ErrorCode.APPROVAL_REQUIRED, "This write-off (" + adjustment.getTotalValue()
+                        + ") exceeds " + threshold + " and needs manager approval.",
+                        Map.of("action", ApprovalAction.WRITE_OFF_OVER_LIMIT.name(),
+                                "value", adjustment.getTotalValue().toPlainString()));
+            }
             approval = approvals.consume(request.approvalToken(), ApprovalAction.WRITE_OFF_OVER_LIMIT, storeId,
                     user.id(), adjustment.getTotalValue());
             adjustment.setApprovedBy(approval.approverId());

@@ -55,7 +55,7 @@ export function AuthGate({ children, anyOf = [] }) {
     return (
       <div className="flex h-screen flex-col items-center justify-center gap-2 text-center">
         <p className="text-lg font-semibold text-slate-800">You do not have access to this page</p>
-        <button className="text-sm text-brand-700 underline" onClick={() => router.replace("/dashboard")}>
+        <button className="text-sm text-primary-700 underline" onClick={() => router.replace("/dashboard")}>
           Go to the dashboard
         </button>
       </div>

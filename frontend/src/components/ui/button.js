@@ -5,8 +5,9 @@ import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 const VARIANTS = {
-  primary: "bg-brand-700 text-white hover:bg-brand-800 disabled:bg-brand-700/50",
-  secondary: "bg-white text-slate-800 border border-slate-300 hover:bg-slate-50 disabled:text-slate-400",
+  primary: "bg-primary text-primary-foreground hover:bg-primary-700 disabled:bg-primary/50",
+  secondary: "bg-secondary text-secondary-foreground hover:bg-secondary-600 disabled:bg-secondary/50",
+  outline: "bg-white text-slate-800 border border-slate-300 hover:bg-slate-50 disabled:text-slate-400",
   danger: "bg-red-600 text-white hover:bg-red-700 disabled:bg-red-600/50",
   ghost: "text-slate-700 hover:bg-slate-100 disabled:text-slate-400",
   success: "bg-emerald-600 text-white hover:bg-emerald-700 disabled:bg-emerald-600/50",

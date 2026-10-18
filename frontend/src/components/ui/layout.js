@@ -87,12 +87,12 @@ export function Pagination({ page, totalPages, totalElements, size, onPageChange
         {totalElements === 0 ? "No results" : `${from}–${to} of ${totalElements.toLocaleString()}`}
       </p>
       <div className="flex gap-2">
-        <Button variant="secondary" size="sm" onClick={() => onPageChange(page - 1)} disabled={page <= 0}>
+        <Button variant="outline" size="sm" onClick={() => onPageChange(page - 1)} disabled={page <= 0}>
           <ChevronLeft className="h-4 w-4" aria-hidden="true" />
           Previous
         </Button>
         <Button
-          variant="secondary"
+          variant="outline"
           size="sm"
           onClick={() => onPageChange(page + 1)}
           disabled={page + 1 >= totalPages}

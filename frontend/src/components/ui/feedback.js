@@ -50,7 +50,7 @@ export function ErrorState({ error, onRetry, className }) {
       <p className="mt-3 text-sm font-semibold text-slate-800">Could not load this data</p>
       <p className="mt-1 max-w-md text-sm text-slate-500">{errorMessage(error)}</p>
       {onRetry && (
-        <Button variant="secondary" size="sm" className="mt-4" onClick={onRetry}>
+        <Button variant="outline" size="sm" className="mt-4" onClick={onRetry}>
           Try again
         </Button>
       )}
@@ -64,7 +64,8 @@ const BADGE = {
   red: "bg-red-100 text-red-800",
   amber: "bg-amber-100 text-amber-800",
   blue: "bg-sky-100 text-sky-800",
-  brand: "bg-brand-100 text-brand-800",
+  primary: "bg-primary-100 text-primary-800",
+  secondary: "bg-secondary-100 text-secondary-800",
 };
 
 export function Badge({ color = "gray", className, children }) {

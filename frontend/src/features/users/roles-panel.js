@@ -41,7 +41,7 @@ function RoleEditor({ role, permissions, onClose }) {
       size="lg"
       footer={
         <>
-          <Button variant="secondary" onClick={onClose}>
+          <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
           <Button onClick={() => save.mutate()} loading={save.isPending}>
@@ -103,14 +103,14 @@ export function RolesPanel({ canManage }) {
               </p>
             </div>
             {canManage && (
-              <Button variant="secondary" size="sm" onClick={() => setEditing(role)} disabled={!permissions.data}>
+              <Button variant="outline" size="sm" onClick={() => setEditing(role)} disabled={!permissions.data}>
                 Edit permissions
               </Button>
             )}
           </div>
           <div className="mt-3 flex flex-wrap gap-1.5">
             {role.permissions.map((p) => (
-              <Badge key={p} color="brand">
+              <Badge key={p} color="primary">
                 {p}
               </Badge>
             ))}

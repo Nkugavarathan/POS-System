@@ -22,6 +22,9 @@ public class AuthCookies {
     public static final String ACCESS_COOKIE = "POS_AT";
     public static final String REFRESH_COOKIE = "POS_RT";
     public static final String REFRESH_PATH = "/api/v1/auth";
+    public static final String SHOP_ACCESS_COOKIE = "SHOP_AT";
+    public static final String SHOP_REFRESH_COOKIE = "SHOP_RT";
+    public static final String SHOP_REFRESH_PATH = "/api/v1/shop/auth";
 
     private final AppProperties properties;
 
@@ -42,6 +45,17 @@ public class AuthCookies {
     public void clear(HttpHeaders headers) {
         headers.add(HttpHeaders.SET_COOKIE, build(ACCESS_COOKIE, "", "/", Duration.ZERO).toString());
         headers.add(HttpHeaders.SET_COOKIE, build(REFRESH_COOKIE, "", REFRESH_PATH, Duration.ZERO).toString());
+    }
+
+    public void writeShopSession(HttpHeaders headers, String access, String refresh) {
+        headers.add(HttpHeaders.SET_COOKIE, build(SHOP_ACCESS_COOKIE, access, "/", properties.security().accessTokenTtl()).toString());
+        headers.add(HttpHeaders.SET_COOKIE, build(SHOP_REFRESH_COOKIE, refresh, SHOP_REFRESH_PATH,
+                properties.security().refreshFamilyMaxLifetime()).toString());
+    }
+
+    public void clearShop(HttpHeaders headers) {
+        headers.add(HttpHeaders.SET_COOKIE, build(SHOP_ACCESS_COOKIE, "", "/", Duration.ZERO).toString());
+        headers.add(HttpHeaders.SET_COOKIE, build(SHOP_REFRESH_COOKIE, "", SHOP_REFRESH_PATH, Duration.ZERO).toString());
     }
 
     public Optional<String> read(HttpServletRequest request, String name) {

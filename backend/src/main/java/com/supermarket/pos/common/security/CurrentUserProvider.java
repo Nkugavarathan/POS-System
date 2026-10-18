@@ -28,6 +28,9 @@ public class CurrentUserProvider {
             return Optional.empty();
         }
         Jwt jwt = token.getToken();
+        if (JwtClaims.TYPE_CUSTOMER.equals(jwt.getClaimAsString(JwtClaims.TOKEN_TYPE))) {
+            return Optional.empty(); // online-shop customers are never staff users
+        }
         Set<Long> stores = longSet(jwt.getClaim(JwtClaims.STORES));
         Long defaultStore = toLong(jwt.getClaim(JwtClaims.DEFAULT_STORE));
         return Optional.of(new CurrentUser(

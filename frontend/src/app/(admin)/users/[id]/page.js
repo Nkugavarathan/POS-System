@@ -37,7 +37,7 @@ function ResetPasswordDialog({ user, onClose }) {
       description="The user must choose a new password at the next sign-in."
       footer={
         <>
-          <Button variant="secondary" onClick={onClose}>
+          <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
           <Button onClick={() => reset.mutate()} disabled={!valid} loading={reset.isPending}>
@@ -123,7 +123,7 @@ export default function UserDetailPage({ params }) {
               actions={
                 canManage && (
                   <>
-                    <Button variant="secondary" onClick={() => setResetOpen(true)}>
+                    <Button variant="outline" onClick={() => setResetOpen(true)}>
                       <KeyRound className="h-4 w-4" aria-hidden="true" /> Reset password
                     </Button>
                     {user.status === "ACTIVE" ? (

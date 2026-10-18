@@ -49,6 +49,22 @@ public class UserAccountService {
         return users.findWithAuthoritiesByUsernameIgnoreCase(username.trim());
     }
 
+    /** user id → full name, for showing who did what (receipts, shift lists, audit). */
+    @Transactional(readOnly = true)
+    public java.util.Map<Long, String> displayNames(java.util.Collection<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return java.util.Map.of();
+        }
+        return users.findAllById(new java.util.HashSet<>(ids)).stream()
+                .collect(java.util.stream.Collectors.toMap(User::getId, User::getFullName));
+    }
+
+    /** Highest manual-discount percent the user may give without approval (from their roles). */
+    @Transactional(readOnly = true)
+    public java.math.BigDecimal maxDiscountPercent(Long userId) {
+        return users.findWithAuthoritiesById(userId).map(User::maxDiscountPercent).orElse(java.math.BigDecimal.ZERO);
+    }
+
     @Transactional(readOnly = true)
     public User loadForSession(Long userId) {
         return users.findWithAuthoritiesById(userId).orElseThrow(() -> ApiException.notFound("User", userId));
