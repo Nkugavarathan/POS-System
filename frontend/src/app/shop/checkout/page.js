@@ -33,7 +33,7 @@ function buildSlots(now = new Date()) {
       if (start.getTime() - now.getTime() < 60 * 60_000) continue;
       const end = new Date(start);
       end.setHours(h + 2);
-      slots.push({ iso: start.toISOString(), label: `${fmt(start)} – ${fmt(end)}` });
+      slots.push({ iso: start.toISOString(), label: `${fmt(start)} - ${fmt(end)}` });
     }
     if (slots.length) {
       days.push({

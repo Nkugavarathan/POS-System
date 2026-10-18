@@ -202,7 +202,7 @@ All take `from`, `to` (date, store timezone, range ≤ 366 days) and are aggrega
   "id": 7, "username": "cashier1", "fullName": "Nimal Perera",
   "roles": ["CASHIER"],
   "permissions": ["POS_SELL", "POS_HOLD_CART", "SHIFT_OPERATE", "DISCOUNT_APPLY", "..."],
-  "stores": [{ "id": 1, "code": "CMB01", "name": "Colombo 01 (DEMO)" }],
+  "stores": [{ "id": 1, "code": "CMB01", "name": "FreshPick Supermarket - Colombo 03" }],
   "defaultStoreId": 1,
   "maxDiscountPercent": "0.00",
   "mustChangePassword": false,
@@ -223,7 +223,7 @@ All take `from`, `to` (date, store timezone, range ≤ 366 days) and are aggrega
 // ProductDto (admin)
 {
   "id": 15, "sku": "GRC-RICE-5KG", "name": "Samba Rice 5kg", "description": null,
-  "category": { "id": 4, "name": "Rice & Grains" }, "brand": "DEMO Brand",
+  "category": { "id": 4, "name": "Rice & Grains" }, "brand": "FreshPick Pantry",
   "unitOfMeasure": "PACK", "fractionalQuantity": false,
   "costPrice": "1450.0000",           // only with PRODUCT_VIEW_COST
   "sellingPrice": "1890.00",
@@ -239,7 +239,7 @@ All take `from`, `to` (date, store timezone, range ≤ 366 days) and are aggrega
 // ProductCreateRequest
 {
   "sku": "GRC-RICE-5KG", "barcodes": ["4790000000015"], "name": "Samba Rice 5kg",
-  "description": null, "categoryId": 4, "brand": "DEMO Brand", "unitOfMeasure": "PACK",
+  "description": null, "categoryId": 4, "brand": "FreshPick Pantry", "unitOfMeasure": "PACK",
   "costPrice": "1450.0000", "sellingPrice": "1890.00", "taxRateId": 1,
   "reorderLevel": "10", "trackBatches": false, "trackExpiry": false,
   "allowPriceOverride": false, "imageUrl": null

@@ -12,7 +12,7 @@ import { ProductCard, ProductGridSkeleton } from "@/features/shop/components/pro
 import { ErrorState } from "@/components/ui/feedback";
 
 const SORTS = [
-  { value: "name,asc", label: "Name A–Z" },
+  { value: "name,asc", label: "Name A-Z" },
   { value: "sellingPrice,asc", label: "Price: low to high" },
   { value: "sellingPrice,desc", label: "Price: high to low" },
 ];

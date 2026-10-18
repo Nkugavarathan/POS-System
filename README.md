@@ -2,7 +2,7 @@
 
 A supermarket point-of-sale and back-office system: cashier checkout with laptop-camera barcode scanning, a per-store inventory ledger, purchasing, returns, shifts and reporting.
 
-This is an independent implementation. It uses no proprietary code, branding or assets from any retailer. All seed data is fictional and labelled **DEMO**.
+This is an independent implementation. It uses no proprietary code, branding or assets from any retailer. Store, staff, brand and product data in the development seed is invented.
 
 > **Status:** phases 1–10 and the online shop are built and covered by integration tests (see the [implementation plan](docs/05-implementation-plan.md)). Hardening (Phase 11) and production deployment docs (Phase 12) are still open. **This project is not production-ready.** That needs the security review, a real email/SMS provider, HTTPS deployment and payment-terminal verification listed in the plan.
 
@@ -28,7 +28,7 @@ This is an independent implementation. It uses no proprietary code, branding or 
 
 1. Start MariaDB/MySQL (e.g. XAMPP) and create the `pos_dev` and `pos_test` databases with a dedicated user.
 2. Copy `backend/.env.example` to `backend/.env` and fill in `DB_URL`, `TEST_DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, `JWT_SECRET`.
-3. Backend: `cd backend && set -a && . ./.env && set +a && ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev` (API on :8080; Flyway migrates and loads the DEMO seed).
+3. Backend: `cd backend && set -a && . ./.env && set +a && ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev` (API on :8080; Flyway migrates and loads the starter data).
 4. Frontend: `cd frontend && npm install && npm run dev` → http://localhost:3000 (shop) and http://localhost:3000/login (staff).
 5. Tests: `cd backend && ./mvnw verify` (needs `TEST_DB_URL`; the test schema is wiped) and `cd frontend && npm test`.
 
@@ -38,4 +38,4 @@ Theme colours live in `frontend/src/app/globals.css` (`--primary`, `--secondary`
 
 - **Camera scanning** needs a secure context: `http://localhost` during development, HTTPS in production. A USB barcode scanner also works because it types into the POS search field. You can type barcodes by hand to test without any scanner.
 - **Card payments** are recorded after an external terminal approves them. The system does not charge cards itself.
-- **Credentials:** demo accounts exist only in the `dev` profile seed. Never deploy with them.
+- **Credentials:** the starter accounts exist only in the `dev` profile seed. Never deploy with them.

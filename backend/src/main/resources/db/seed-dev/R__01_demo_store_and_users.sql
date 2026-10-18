@@ -1,6 +1,6 @@
 -- ============================================================================================
--- DEMO DATA - LOCAL DEVELOPMENT ONLY (loaded by the dev profile from classpath:db/seed-dev).
--- Never enable this location in production. The demo passwords below are public; see README.
+-- STARTER DATA - LOCAL DEVELOPMENT ONLY (loaded by the dev profile from classpath:db/seed-dev).
+-- Never enable this location in production. The passwords below are public; see README.
 --
 --   superadmin / SuperAdmin@123   (SUPER_ADMIN, both stores)
 --   admin      / Admin@1234       (ADMIN, both stores)
@@ -15,13 +15,13 @@
 
 INSERT IGNORE INTO stores (code, name, address_line1, city, phone, email, tax_registration_no, currency, timezone,
                            prices_include_tax, receipt_header, receipt_footer, active, created_at, updated_at)
-VALUES ('CMB01', 'DEMO Supermarket - Colombo 01', '100 Example Road', 'Colombo', '+94 11 000 0000',
-        'colombo01@demo.invalid', 'DEMO-VAT-000001', 'LKR', 'Asia/Colombo', TRUE,
-        'DEMO STORE - NOT A REAL BUSINESS', 'Thank you for shopping with us! Goods once sold may be returned within 14 days with this receipt.',
+VALUES ('CMB01', 'FreshPick Supermarket - Colombo 03', '214 Galle Road', 'Colombo 03', '+94 11 250 3344',
+        'colombo03@freshpick.local', '114567890-7000', 'LKR', 'Asia/Colombo', TRUE,
+        'FreshPick Supermarket', 'Thank you for shopping with us! Goods once sold may be returned within 14 days with this receipt.',
         TRUE, UTC_TIMESTAMP(6), UTC_TIMESTAMP(6)),
-       ('KDY01', 'DEMO Supermarket - Kandy 01', '25 Sample Street', 'Kandy', '+94 81 000 0000',
-        'kandy01@demo.invalid', 'DEMO-VAT-000002', 'LKR', 'Asia/Colombo', TRUE,
-        'DEMO STORE - NOT A REAL BUSINESS', 'Thank you for shopping with us!',
+       ('KDY01', 'FreshPick Supermarket - Kandy', '45 Dalada Veediya', 'Kandy', '+94 81 222 6177',
+        'kandy@freshpick.local', '114567890-7001', 'LKR', 'Asia/Colombo', TRUE,
+        'FreshPick Supermarket', 'Thank you for shopping with us!',
         TRUE, UTC_TIMESTAMP(6), UTC_TIMESTAMP(6));
 
 INSERT IGNORE INTO registers (store_id, code, name, active, created_at, updated_at)
@@ -34,18 +34,18 @@ WHERE s.code IN ('CMB01', 'KDY01');
 
 INSERT IGNORE INTO users (username, full_name, email, password_hash, pin_hash, status, must_change_password,
                           created_at, updated_at)
-VALUES ('superadmin', 'Demo Super Admin', 'superadmin@demo.invalid',
+VALUES ('superadmin', 'Nimal Perera', 'superadmin@freshpick.local',
         '$2a$12$M8.OHQuyAJUE7iOxCfhIOu9vWlcEdipM.OMHhwfxupsTGfF9nqOPa', NULL, 'ACTIVE', FALSE, UTC_TIMESTAMP(6), UTC_TIMESTAMP(6)),
-       ('admin', 'Demo Administrator', 'admin@demo.invalid',
+       ('admin', 'Kavindi Fernando', 'admin@freshpick.local',
         '$2a$12$bR3.4hztn.OVshl7Ghjdauy.3EzAYF6bXLR9IIYQpJpxGf6f9/TtO', NULL, 'ACTIVE', FALSE, UTC_TIMESTAMP(6), UTC_TIMESTAMP(6)),
-       ('manager', 'Demo Store Manager', 'manager@demo.invalid',
+       ('manager', 'Ruwan Jayasinghe', 'manager@freshpick.local',
         '$2a$12$SrHjN8cPyrb11XmIbkNpaOQdy7KZz3vczo8HJW6a1aMxCyjkOeD5i',
         '$2a$12$IIpNUdAMbfF6QC1t2GbMNuGD9YqoKf7rYeeHCA9Rnk2Umn.X7pIHW', 'ACTIVE', FALSE, UTC_TIMESTAMP(6), UTC_TIMESTAMP(6)),
-       ('cashier', 'Demo Cashier One', NULL,
+       ('cashier', 'Dilini Silva', NULL,
         '$2a$12$WChcx9ppQ4GFHqOVa9UtPeJQIhEaoYV1jccfhv4Hbf2z4JqRanOVe', NULL, 'ACTIVE', FALSE, UTC_TIMESTAMP(6), UTC_TIMESTAMP(6)),
-       ('cashier2', 'Demo Cashier Two', NULL,
+       ('cashier2', 'Tharindu Bandara', NULL,
         '$2a$12$WChcx9ppQ4GFHqOVa9UtPeJQIhEaoYV1jccfhv4Hbf2z4JqRanOVe', NULL, 'ACTIVE', FALSE, UTC_TIMESTAMP(6), UTC_TIMESTAMP(6)),
-       ('inventory', 'Demo Inventory Clerk', NULL,
+       ('inventory', 'Saman Kumara', NULL,
         '$2a$12$BzQ0QPbMigmRcleCDLP.xONVqZNS8jFDFcUnpjIcDZG/Ep1MfWL2C', NULL, 'ACTIVE', FALSE, UTC_TIMESTAMP(6), UTC_TIMESTAMP(6));
 
 INSERT IGNORE INTO user_roles (user_id, role_id)

@@ -1,4 +1,4 @@
-# DEMO barcodes (local development seed)
+# Barcodes (local development seed)
 
 Fictional products from `db/seed-dev`. Barcodes use the GS1 restricted-circulation prefix **21** (in-store use only), so they never match real retail products.
 

@@ -528,7 +528,7 @@ erDiagram
 | `V8__customers_loyalty.sql` | customers, loyalty_accounts, loyalty_transactions | 7 |
 | `V9__returns.sql` | returns, return_items, refunds | 8 |
 | `V10__purchasing.sql` | suppliers, purchase_orders(+items), goods_receipts(+items) | 9 |
-| `db/seed-dev/V9000__demo_data.sql` | **DEMO** store, users, categories, products, barcodes, suppliers, opening stock | 2→9, only loaded when `spring.flyway.locations` includes `seed-dev` (dev profile) |
+| `db/seed-dev/R__*.sql` | Starter store, users, categories, products, barcodes, suppliers, opening stock | 2→9, only loaded when `spring.flyway.locations` includes `seed-dev` (dev profile) |
 
 Rules: never edit an applied migration; add a new one. `spring.jpa.hibernate.ddl-auto=validate` makes startup fail if entities and schema drift apart.
 

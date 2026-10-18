@@ -308,7 +308,7 @@ export default function ProductDetailPage({ params }) {
                           </Td>
                           <Td>{p.type === "PERCENT" ? `${p.value}%` : formatMoney(p.value)}</Td>
                           <Td className="text-xs text-slate-500">
-                            {formatDateTime(p.startsAt)} – {formatDateTime(p.endsAt)}
+                            {formatDateTime(p.startsAt)} - {formatDateTime(p.endsAt)}
                           </Td>
                           <Td align="right">
                             {canPrice && (

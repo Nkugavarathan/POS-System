@@ -1,4 +1,4 @@
-# Local development profile. Loads the DEMO seed data and relaxes cookie security
+# Local development profile. Loads the starter data and relaxes cookie security
 # for http://localhost. Never use this profile in production.
 spring:
   flyway:

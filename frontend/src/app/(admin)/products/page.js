@@ -16,8 +16,8 @@ import { useDebouncedValue } from "@/lib/hooks";
 import { formatMoney, formatQuantity } from "@/lib/format";
 
 const SORTS = [
-  ["name,asc", "Name A–Z"],
-  ["name,desc", "Name Z–A"],
+  ["name,asc", "Name A-Z"],
+  ["name,desc", "Name Z-A"],
   ["sellingPrice,asc", "Price: low to high"],
   ["sellingPrice,desc", "Price: high to low"],
   ["updatedAt,desc", "Recently updated"],

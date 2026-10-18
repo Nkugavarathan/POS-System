@@ -40,7 +40,7 @@ Each phase delivers a **vertical slice**: backend, frontend and tests together, 
 - [x] AuthService: login (lockout), refresh rotation and reuse detection, logout, `/me`; Bucket4j rate limit filter
 - [x] Approval service (`/approvals`) with scoped single-use tokens
 - [x] Users/roles admin APIs, `StoreAccessGuard`, audit service + `audit_logs` writes
-- [x] Dev seed: DEMO store, registers, demo users (dev profile only)
+- [x] Dev seed: stores, registers, staff accounts (dev profile only)
 - [x] **Frontend scaffold**: Next.js 16 JS app, Tailwind 4, providers, Axios instance (XSRF, refresh single-flight), login page, admin layout and permission-aware sidebar, `/pos` route shell, user management pages
 - [x] Tests: auth service unit tests, security slice tests (every role × representative endpoint), refresh reuse IT, rate limit test; FE: login form validation, http refresh interceptor, nav permission tests
 - Gate: login → me → refresh → logout works through the Next.js proxy
@@ -49,7 +49,7 @@ Each phase delivers a **vertical slice**: backend, frontend and tests together, 
 - [x] `V4` catalog tables; tax rates seed (configurable, flagged as an example)
 - [x] `BarcodeNormalizer` (GTIN check digit, UPC-A→EAN-13, UPC-E expansion)
 - [x] Category CRUD (tree), Product CRUD, status, barcodes, promotions; search/filter/sort/paging (no N+1)
-- [x] Demo catalogue seed (46 products, 14 categories, labelled DEMO; see [demo-barcodes.md](demo-barcodes.md))
+- [x] Starter catalogue seed (46 products, 14 categories; see [barcodes.md](barcodes.md))
 - [x] FE: products list/editor (barcode prefill), categories tree
 - [x] Tests (backend): normalizer unit tests, catalog IT
 - [ ] Tests (frontend): product form validation

@@ -84,7 +84,7 @@ export function Pagination({ page, totalPages, totalElements, size, onPageChange
   return (
     <nav className="flex items-center justify-between border-t border-slate-200 px-4 py-3" aria-label="Pagination">
       <p className="text-sm text-slate-500">
-        {totalElements === 0 ? "No results" : `${from}–${to} of ${totalElements.toLocaleString()}`}
+        {totalElements === 0 ? "No results" : `${from}-${to} of ${totalElements.toLocaleString()}`}
       </p>
       <div className="flex gap-2">
         <Button variant="outline" size="sm" onClick={() => onPageChange(page - 1)} disabled={page <= 0}>

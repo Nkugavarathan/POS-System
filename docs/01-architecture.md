@@ -123,7 +123,7 @@ backend/
     │   └── resources/
     │       ├── application.yml, application-dev.yml, application-prod.yml
     │       ├── db/migration/          (V1__..., V2__... Flyway; the schema source of truth)
-    │       ├── db/seed-dev/           (R__/V9xx demo data, only loaded in the dev profile)
+    │       ├── db/seed-dev/           (R__ starter data, only loaded in the dev profile)
     │       └── logback-spring.xml
     └── test/java/com/supermarket/pos/
         ├── <module>/...               (unit tests: services with Mockito)
