@@ -14,7 +14,7 @@ export function AuthCard({ title, subtitle, children, footer }) {
         <ul className="mt-6 space-y-5">
           {[
             { icon: PackageCheck, t: "Live packing tracker", b: "See each item packed and get a pickup code." },
-            { icon: ShieldCheck, t: "Swaps on your terms", b: "Approve or refuse substitutes — never at a higher price." },
+            { icon: ShieldCheck, t: "Swaps on your terms", b: "Approve or refuse substitutes - never at a higher price." },
             { icon: Repeat, t: "One loyalty card", b: "Link your in-store card: points and till receipts in one place." },
           ].map((x) => (
             <li key={x.t} className="flex gap-3">

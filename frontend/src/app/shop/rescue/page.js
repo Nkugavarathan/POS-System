@@ -24,10 +24,10 @@ export default function RescuePage() {
             <Leaf className="h-4 w-4" aria-hidden="true" /> Rescue deals {store ? `· ${store.name}` : ""}
           </p>
           <h1 className="mt-3 max-w-2xl text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            Rescue good food before its date — and pay less for it.
+            Rescue good food before its date - and pay less for it.
           </h1>
           <p className="mt-3 max-w-2xl text-slate-600">
-            When a batch on our shelves gets close to its best-before date, its price drops automatically — online and at the
+            When a batch on our shelves gets close to its best-before date, its price drops automatically - online and at the
             till. The closer the date, the bigger the discount. Each deal is for this store&rsquo;s stock only, so what you see
             is really there.
           </p>
@@ -63,7 +63,7 @@ export default function RescuePage() {
             <Leaf className="h-10 w-10 text-secondary-300" aria-hidden="true" />
             <p className="mt-3 font-semibold text-slate-800">Nothing to rescue right now</p>
             <p className="mt-1 max-w-sm text-sm text-slate-500">
-              Our shelves are fresh at this store. Deals appear here automatically when a batch nears its date — check back
+              Our shelves are fresh at this store. Deals appear here automatically when a batch nears its date - check back
               later.
             </p>
             <Link href="/shop/browse" className="mt-4 text-sm font-semibold text-primary-700 hover:underline">

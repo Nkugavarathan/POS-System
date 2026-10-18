@@ -74,8 +74,8 @@ export default function PurchasesPage() {
                       </Link>
                     </Td>
                     <Td>{po.supplierName}</Td>
-                    <Td>{po.orderDate ? formatDate(po.orderDate) : "—"}</Td>
-                    <Td>{po.expectedDate ? formatDate(po.expectedDate) : "—"}</Td>
+                    <Td>{po.orderDate ? formatDate(po.orderDate) : "-"}</Td>
+                    <Td>{po.expectedDate ? formatDate(po.expectedDate) : "-"}</Td>
                     <Td align="right">{po.items.length}</Td>
                     <Td align="right">{formatMoney(po.expectedTotal)}</Td>
                     <Td>

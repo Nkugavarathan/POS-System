@@ -160,13 +160,13 @@ export default function CountPage({ params }) {
                               onChange={(e) => setDraft({ ...draft, [i.productId]: e.target.value })}
                             />
                           ) : (
-                            <span>{i.countedQuantity == null ? "—" : formatQuantity(i.countedQuantity)}</span>
+                            <span>{i.countedQuantity == null ? "-" : formatQuantity(i.countedQuantity)}</span>
                           )}
                         </Td>
                         {count.status === "POSTED" && <Td align="right">{formatQuantity(i.quantityAtPost)}</Td>}
                         {count.status === "POSTED" && (
                           <Td align="right" className={Number(i.variance) < 0 ? "text-red-600" : Number(i.variance) > 0 ? "text-emerald-700" : ""}>
-                            {i.variance == null ? "—" : `${Number(i.variance) > 0 ? "+" : ""}${formatQuantity(i.variance)}`}
+                            {i.variance == null ? "-" : `${Number(i.variance) > 0 ? "+" : ""}${formatQuantity(i.variance)}`}
                           </Td>
                         )}
                       </tr>

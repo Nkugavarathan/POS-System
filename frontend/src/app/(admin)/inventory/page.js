@@ -89,7 +89,7 @@ function StockTab({ showCost }) {
                   <Td align="right" className="text-slate-500">{formatQuantity(r.reorderLevel)}</Td>
                   {showCost && <Td align="right">{formatMoney(r.averageCost)}</Td>}
                   {showCost && <Td align="right">{formatMoney(r.stockValue)}</Td>}
-                  <Td className="text-xs text-slate-500">{r.lastMovementAt ? formatDateTime(r.lastMovementAt) : "—"}</Td>
+                  <Td className="text-xs text-slate-500">{r.lastMovementAt ? formatDateTime(r.lastMovementAt) : "-"}</Td>
                 </tr>
               ))}
             </tbody>
@@ -337,7 +337,7 @@ function CountsTab({ canCount }) {
                     <Badge color={COUNT_COLOR[c.status]}>{c.status.toLowerCase()}</Badge>
                   </Td>
                   <Td className="text-xs text-slate-500">{formatDateTime(c.createdAt)}</Td>
-                  <Td className="text-xs text-slate-500">{c.postedAt ? formatDateTime(c.postedAt) : "—"}</Td>
+                  <Td className="text-xs text-slate-500">{c.postedAt ? formatDateTime(c.postedAt) : "-"}</Td>
                 </tr>
               ))}
             </tbody>

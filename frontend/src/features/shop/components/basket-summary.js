@@ -37,7 +37,7 @@ export function BasketSummary({ quote, children, title = "Summary" }) {
           )}
           <p className="flex items-start gap-1.5 pt-1 text-xs text-slate-500">
             <Wallet className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-            Nothing to pay now. You pay at the counter when you collect — the final amount can only go down if something
+            Nothing to pay now. You pay at the counter when you collect - the final amount can only go down if something
             is swapped or unavailable.
           </p>
         </dl>

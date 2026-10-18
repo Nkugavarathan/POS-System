@@ -43,7 +43,7 @@ export default function AuditPage() {
 
   return (
     <div>
-      <PageHeader title="Audit log" description="Every sensitive action — who, what, when, from where. Entries cannot be edited or deleted." />
+      <PageHeader title="Audit log" description="Every sensitive action - who, what, when, from where. Entries cannot be edited or deleted." />
       <Card>
         <div className="flex flex-wrap items-end gap-3 border-b border-slate-200 p-4">
           <label className="text-xs text-slate-500">
@@ -106,7 +106,7 @@ export default function AuditPage() {
                       <tr className="bg-slate-50">
                         <td colSpan={7} className="px-6 py-3 text-xs text-slate-600">
                           <p>
-                            IP {e.ipAddress || "—"} · correlation <span className="font-mono">{e.correlationId || "—"}</span>
+                            IP {e.ipAddress || "-"} · correlation <span className="font-mono">{e.correlationId || "-"}</span>
                           </p>
                           {e.details && <pre className="mt-2 max-h-64 overflow-auto rounded bg-white p-3 font-mono text-[11px]">{pretty(e.details)}</pre>}
                         </td>

@@ -101,13 +101,13 @@ export default function SaleDetailPage({ params }) {
                       <Td align="right">{formatQuantity(l.quantity)}</Td>
                       <Td align="right">{formatMoney(l.unitPrice)}</Td>
                       <Td align="right" className="text-red-600">
-                        {disc.length ? disc.map((d) => `−${formatMoney(d)}`).join(" ") : "—"}
+                        {disc.length ? disc.map((d) => `−${formatMoney(d)}`).join(" ") : "-"}
                       </Td>
                       <Td align="right">{formatMoney(l.taxAmount)}</Td>
                       <Td align="right" className="font-semibold">
                         {formatMoney(l.lineTotal)}
                       </Td>
-                      <Td align="right">{l.quantityReturned && compare(l.quantityReturned, "0") > 0 ? formatQuantity(l.quantityReturned) : "—"}</Td>
+                      <Td align="right">{l.quantityReturned && compare(l.quantityReturned, "0") > 0 ? formatQuantity(l.quantityReturned) : "-"}</Td>
                     </tr>
                   );
                 })}

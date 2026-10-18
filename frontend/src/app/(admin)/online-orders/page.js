@@ -138,7 +138,7 @@ export default function OnlineOrdersBoard() {
             {Object.entries(summary.data.counts)
               .filter(([s]) => ACTIVE.includes(s))
               .reduce((n, [, c]) => n + c, 0)}{" "}
-            open orders · updated {board.dataUpdatedAt ? formatDateTime(new Date(board.dataUpdatedAt).toISOString()) : "—"}
+            open orders · updated {board.dataUpdatedAt ? formatDateTime(new Date(board.dataUpdatedAt).toISOString()) : "-"}
           </p>
         )}
       </div>

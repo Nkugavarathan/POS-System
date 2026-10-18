@@ -91,9 +91,9 @@ export function ProgressRing({ resolved, total, size = 132 }) {
 const PICK = {
   PENDING: { label: "Waiting to be picked", icon: Hourglass, tone: "text-slate-400", bg: "" },
   PICKED: { label: "Packed", icon: CheckCircle2, tone: "text-emerald-600", bg: "" },
-  SUBSTITUTE_PROPOSED: { label: "Swap offered — your call", icon: RefreshCcw, tone: "text-secondary-700", bg: "bg-secondary-50/70" },
+  SUBSTITUTE_PROPOSED: { label: "Swap offered - your call", icon: RefreshCcw, tone: "text-secondary-700", bg: "bg-secondary-50/70" },
   SUBSTITUTED: { label: "Swapped", icon: RefreshCcw, tone: "text-primary-700", bg: "" },
-  UNAVAILABLE: { label: "Not available — not charged", icon: Ban, tone: "text-slate-500", bg: "bg-slate-50" },
+  UNAVAILABLE: { label: "Not available - not charged", icon: Ban, tone: "text-slate-500", bg: "bg-slate-50" },
 };
 
 export function ItemRow({ line, packing }) {
@@ -119,7 +119,7 @@ export function ItemRow({ line, packing }) {
             → {line.substitute.name} ({formatQuantity(line.substitute.quantity)})
           </p>
         )}
-        {shortPick && <p className="mt-0.5 text-xs text-amber-700">Packed {formatQuantity(line.pickedQuantity)} — you pay for that</p>}
+        {shortPick && <p className="mt-0.5 text-xs text-amber-700">Packed {formatQuantity(line.pickedQuantity)} - you pay for that</p>}
       </div>
       <div className="text-right">
         <p className={cn("inline-flex items-center gap-1 text-xs font-semibold", meta.tone)}>
@@ -164,7 +164,7 @@ export function SubstitutionCard({ line, onDecide, pending }) {
       <p className="mt-4 rounded-xl bg-secondary-50 px-3 py-2 text-center text-xs font-medium text-secondary-900">
         {saving
           ? `You'd pay Rs ${formatMoney(sub.lineTotal)} instead of Rs ${formatMoney(line.lineTotal)}.`
-          : `Same price as what you ordered (Rs ${formatMoney(line.lineTotal)}) — never more.`}
+          : `Same price as what you ordered (Rs ${formatMoney(line.lineTotal)}) - never more.`}
       </p>
       <div className="mt-4 grid grid-cols-2 gap-2">
         <button
@@ -214,7 +214,7 @@ export function PickupPass({ order, onArrived, arriving }) {
             <Store className="mt-0.5 h-5 w-5 shrink-0 text-secondary" aria-hidden="true" />
             <span>
               <strong>We know you&rsquo;re here</strong> (since {formatTime(order.arrivedAt)}). The counter team is bringing
-              your bags — go to any till and give your code.
+              your bags - go to any till and give your code.
             </span>
           </p>
         ) : (

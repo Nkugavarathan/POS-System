@@ -104,7 +104,7 @@ function SubstituteDialog({ line, onClose, onSubmit, pending }) {
       <div className="space-y-4">
         <Alert tone="info">
           The customer approves it from their phone. They are charged the lower of the substitute&rsquo;s price and the
-          original line ({line ? `Rs ${formatMoney(line.lineTotal)}` : ""}) — never more.
+          original line ({line ? `Rs ${formatMoney(line.lineTotal)}` : ""}) - never more.
         </Alert>
         <ProductPicker
           autoFocus
@@ -212,7 +212,7 @@ export default function PackingPage({ params }) {
         actions={
           <>
             {o.status === "PLACED" && (
-              <Button loading={act.isPending} onClick={() => run(() => fulfilmentApi.confirm(orderId), "Order confirmed — customer notified")}>
+              <Button loading={act.isPending} onClick={() => run(() => fulfilmentApi.confirm(orderId), "Order confirmed - customer notified")}>
                 <ThumbsUp className="h-4 w-4" aria-hidden="true" /> Confirm
               </Button>
             )}
@@ -220,7 +220,7 @@ export default function PackingPage({ params }) {
               <Button
                 variant={o.status === "CONFIRMED" ? "primary" : "outline"}
                 loading={act.isPending}
-                onClick={() => run(() => fulfilmentApi.startPacking(orderId), "Packing started — customer notified", () => scanRef.current?.focus())}
+                onClick={() => run(() => fulfilmentApi.startPacking(orderId), "Packing started - customer notified", () => scanRef.current?.focus())}
               >
                 <PlayCircle className="h-4 w-4" aria-hidden="true" /> Start packing
               </Button>
@@ -231,7 +231,7 @@ export default function PackingPage({ params }) {
                 loading={act.isPending}
                 disabled={!allResolved}
                 title={allResolved ? undefined : "Resolve every line first"}
-                onClick={() => run(() => fulfilmentApi.ready(orderId), "Ready for pickup — customer notified")}
+                onClick={() => run(() => fulfilmentApi.ready(orderId), "Ready for pickup - customer notified")}
               >
                 <PackageCheck className="h-4 w-4" aria-hidden="true" /> Mark ready
               </Button>
@@ -411,7 +411,7 @@ export default function PackingPage({ params }) {
         pending={act.isPending}
         onClose={() => setSubLine(null)}
         onSubmit={(body, close) =>
-          run(() => fulfilmentApi.substitute(orderId, subLine.id, body), "Substitute sent — waiting for the customer", close)
+          run(() => fulfilmentApi.substitute(orderId, subLine.id, body), "Substitute sent - waiting for the customer", close)
         }
       />
       <ConfirmDialog

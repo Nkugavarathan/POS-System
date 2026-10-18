@@ -253,7 +253,7 @@ export function ShopShell({ children }) {
           <div className="space-y-3">
             <ShopLogo />
             <p className="max-w-xs text-slate-500">
-              Click &amp; collect from your neighbourhood store. Pay at the counter when you pick up — no card needed online.
+              Click &amp; collect from your neighbourhood store. Pay at the counter when you pick up - no card needed online.
             </p>
           </div>
           <div>

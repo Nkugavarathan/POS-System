@@ -76,7 +76,7 @@ export default function ProductPage({ params }) {
               </p>
               <p className="mt-1">
                 Part of this store&rsquo;s stock is close to its date, so it&rsquo;s marked down. When we pack your order we pick
-                from that batch first — you get the deal and help cut waste.
+                from that batch first - you get the deal and help cut waste.
               </p>
             </div>
           )}
@@ -100,7 +100,7 @@ export default function ProductPage({ params }) {
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="mt-0.5 h-5 w-5 text-primary" aria-hidden="true" />
-              <span>If it runs out, we ask before swapping — and a swap never costs more than this</span>
+              <span>If it runs out, we ask before swapping - and a swap never costs more than this</span>
             </li>
           </ul>
         </div>

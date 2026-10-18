@@ -1,4 +1,4 @@
-# 03 — Database Design (MySQL 8 / MariaDB 10.4+, InnoDB)
+# 03 - Database Design (MySQL 8 / MariaDB 10.4+, InnoDB)
 
 The Flyway migrations in `backend/src/main/resources/db/migration` are the **source of truth**. This document is the design they implement. If the two disagree, the migration wins and this document gets fixed.
 

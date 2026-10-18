@@ -82,7 +82,7 @@ export default function CustomersPage() {
     <div>
       <PageHeader
         title="Customers"
-        description="Loyalty members from the tills and the online shop — one record, one card."
+        description="Loyalty members from the tills and the online shop - one record, one card."
         actions={
           hasPermission(me, "CUSTOMER_MANAGE") && (
             <Button onClick={() => setCreating(true)}>
@@ -133,9 +133,9 @@ export default function CustomersPage() {
                       </Link>
                     </Td>
                     <Td className="font-mono text-xs">{c.customerCode}</Td>
-                    <Td>{c.maskedPhone || "—"}</Td>
-                    <Td>{c.email || "—"}</Td>
-                    <Td className="font-mono text-xs">{c.cardNumber || "—"}</Td>
+                    <Td>{c.maskedPhone || "-"}</Td>
+                    <Td>{c.email || "-"}</Td>
+                    <Td className="font-mono text-xs">{c.cardNumber || "-"}</Td>
                     <Td align="right">{c.pointsBalance.toLocaleString()}</Td>
                     <Td>{c.active ? <Badge color="green">Active</Badge> : <Badge>Inactive</Badge>}</Td>
                   </tr>

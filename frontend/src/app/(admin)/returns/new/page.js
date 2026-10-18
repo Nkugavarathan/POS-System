@@ -265,7 +265,7 @@ function NewReturn() {
                   <span className="text-sm text-slate-600">Refund due</span>
                   <span className="text-2xl font-bold tabular">{formatMoney(preview.refundTotal)}</span>
                 </div>
-                {!preview.withinWindow && <Alert tone="warning">Outside the return window — a manager must approve.</Alert>}
+                {!preview.withinWindow && <Alert tone="warning">Outside the return window - a manager must approve.</Alert>}
                 {preview.approvalRequired && <Alert tone="info">This return needs manager approval.</Alert>}
                 {preview.loyaltyPointsToReverse > 0 && (
                   <p className="text-xs text-slate-500">{preview.loyaltyPointsToReverse} loyalty points will be taken back.</p>

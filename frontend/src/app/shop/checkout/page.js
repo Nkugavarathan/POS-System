@@ -149,7 +149,7 @@ export default function CheckoutPage() {
             <p className="text-sm text-slate-500">
               {[store?.addressLine1, store?.city].filter(Boolean).join(", ")} {store?.phone ? `· ${store.phone}` : ""}
             </p>
-            <p className="mt-2 text-xs text-slate-400">Change the store from the header — prices and stock will update.</p>
+            <p className="mt-2 text-xs text-slate-400">Change the store from the header - prices and stock will update.</p>
           </section>
 
           <section className="rounded-3xl border border-slate-200 bg-white p-5">

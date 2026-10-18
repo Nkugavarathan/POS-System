@@ -32,7 +32,7 @@ export default function ReturnDetailPage({ params }) {
       />
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
         <Card>
-          <CardHeader title="Items returned" description={`Reason: ${d.reasonCode.replaceAll("_", " ").toLowerCase()}${d.notes ? ` — ${d.notes}` : ""}`} />
+          <CardHeader title="Items returned" description={`Reason: ${d.reasonCode.replaceAll("_", " ").toLowerCase()}${d.notes ? ` - ${d.notes}` : ""}`} />
           <Table>
             <thead>
               <tr>

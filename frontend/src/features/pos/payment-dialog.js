@@ -109,7 +109,7 @@ export function PaymentDialog({ open, total, customer, onPay, onClose, paying, e
             <Field label="Brand">
               {(a) => (
                 <Select {...a} value={c.brand} onChange={(e) => setCards(cards.map((x, j) => (j === i ? { ...x, brand: e.target.value } : x)))}>
-                  <option value="">—</option>
+                  <option value="">-</option>
                   <option>VISA</option>
                   <option>MASTERCARD</option>
                   <option>AMEX</option>

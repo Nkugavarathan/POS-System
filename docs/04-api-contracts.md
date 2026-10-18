@@ -1,4 +1,4 @@
-# 04 — API Contracts (v1)
+# 04 - API Contracts (v1)
 
 The generated OpenAPI document (`/v3/api-docs`, UI at `/swagger-ui.html`) is the **runtime source of truth** once each phase lands. This file fixes the conventions and the contracts for the critical flows. The non-critical CRUD DTOs follow the same patterns and are finalized in their phase.
 

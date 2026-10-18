@@ -1,4 +1,4 @@
-# 02 — Core Business Workflows
+# 02 - Core Business Workflows
 
 Each workflow lists actors, steps, the server-side rules and failure behaviour. State machines are at the end.
 
@@ -95,14 +95,14 @@ Server steps, all in **one** `@Transactional` method (`CheckoutService.checkout`
 | 6 | Price everything (`PricingEngine`), compare with `expectedGrandTotal` | `409 QUOTE_MISMATCH` + fresh quote |
 | 7 | Lock `inventory_balances` rows `FOR UPDATE` (ordered), check availability; for batch items lock batches FEFO | `409 INSUFFICIENT_STOCK` (lists products and available quantities) |
 | 8 | Validate tenders: sum(non-cash) ≤ total; cash tendered ≥ remainder; change only from cash; loyalty redemption ≤ balance | `422 INSUFFICIENT_TENDER` / `PAYMENT_INVALID` |
-| 9 | Next receipt number (`document_sequences` FOR UPDATE) | — |
+| 9 | Next receipt number (`document_sequences` FOR UPDATE) | - |
 | 10 | Insert `sales`, `sale_items`, `sale_discounts`, `payments` | DB constraint → `409`/`500` |
 | 11 | Deduct balances and batches, insert `stock_movements(SALE)` with before/after | `CHECK` violation → `409 INSUFFICIENT_STOCK` |
 | 12 | Loyalty: insert EARN (and REDEEM) transactions, update the account (`@Version`) | `409 CONCURRENT_MODIFICATION` → client retries with the same key |
-| 13 | Audit (`SALE_COMPLETED`; discounts and overrides with approver) | — |
-| 14 | Update the idempotency record with `resource_id = sale.id` | — |
+| 13 | Audit (`SALE_COMPLETED`; discounts and overrides with approver) | - |
+| 14 | Update the idempotency record with `resource_id = sale.id` | - |
 | 15 | Publish `SaleCompletedEvent` (AFTER_COMMIT, async: low-stock alerts, metrics) | does not affect the sale |
-| 16 | Return `SaleDto` with receipt data | — |
+| 16 | Return `SaleDto` with receipt data | - |
 
 **Client behaviour:**
 - The Pay button is disabled while the request is in flight.

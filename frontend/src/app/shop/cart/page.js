@@ -67,7 +67,7 @@ export default function CartPage() {
           <ShoppingBasket className="h-10 w-10 text-primary" aria-hidden="true" />
         </span>
         <h1 className="mt-5 text-2xl font-extrabold text-slate-900">Your basket is empty</h1>
-        <p className="mt-2 text-slate-500">Start with today&rsquo;s rescue deals — good food, lower prices.</p>
+        <p className="mt-2 text-slate-500">Start with today&rsquo;s rescue deals - good food, lower prices.</p>
         <div className="mt-6 flex gap-3">
           <Link href="/shop/rescue" className="inline-flex h-11 items-center rounded-full bg-secondary px-5 text-sm font-semibold text-secondary-foreground">
             Rescue deals

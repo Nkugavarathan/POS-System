@@ -152,8 +152,8 @@ export default function SuppliersPage() {
                   <tr key={s.id} className="cursor-pointer hover:bg-slate-50" onClick={() => setEditing(s)}>
                     <Td className="font-mono text-xs">{s.code}</Td>
                     <Td className="font-medium text-slate-900">{s.name}</Td>
-                    <Td>{s.contactPerson || "—"}</Td>
-                    <Td>{s.phone || "—"}</Td>
+                    <Td>{s.contactPerson || "-"}</Td>
+                    <Td>{s.phone || "-"}</Td>
                     <Td align="right">{s.paymentTermsDays} days</Td>
                     <Td>{s.active ? <Badge color="green">Active</Badge> : <Badge>Inactive</Badge>}</Td>
                   </tr>

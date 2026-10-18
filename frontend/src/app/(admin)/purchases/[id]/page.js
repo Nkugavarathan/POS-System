@@ -44,7 +44,7 @@ function ReceiveForm({ po, onDone }) {
   const receive = useMutation({
     mutationFn: () => purchasingApi.receive(po.id, { supplierId: po.supplierId, supplierInvoiceNo: invoice || null, items }, key),
     onSuccess: (grn) => {
-      toast.success(`${grn.grnNumber} received — stock updated`);
+      toast.success(`${grn.grnNumber} received - stock updated`);
       queryClient.invalidateQueries({ queryKey: ["purchases"] });
       onDone();
     },

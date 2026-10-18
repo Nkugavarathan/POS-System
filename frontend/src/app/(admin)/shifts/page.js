@@ -12,7 +12,7 @@ import { formatDateTime, formatMoney } from "@/lib/format";
 import { compare } from "@/lib/money";
 
 function VarianceBadge({ value }) {
-  if (value === null || value === undefined) return <span className="text-slate-400">—</span>;
+  if (value === null || value === undefined) return <span className="text-slate-400">-</span>;
   const c = compare(value, "0");
   return <Badge color={c === 0 ? "green" : c > 0 ? "blue" : "red"}>{c > 0 ? "+" : ""}{formatMoney(value)}</Badge>;
 }
@@ -79,8 +79,8 @@ export default function ShiftsPage() {
                     <Td className="whitespace-nowrap">{formatDateTime(s.openedAt)}</Td>
                     <Td className="whitespace-nowrap">{s.closedAt ? formatDateTime(s.closedAt) : <Badge color="green">Open</Badge>}</Td>
                     <Td align="right">{formatMoney(s.openingFloat)}</Td>
-                    <Td align="right">{s.expectedCash ? formatMoney(s.expectedCash) : "—"}</Td>
-                    <Td align="right">{s.countedCash ? formatMoney(s.countedCash) : "—"}</Td>
+                    <Td align="right">{s.expectedCash ? formatMoney(s.expectedCash) : "-"}</Td>
+                    <Td align="right">{s.countedCash ? formatMoney(s.countedCash) : "-"}</Td>
                     <Td>
                       <VarianceBadge value={s.variance} />
                     </Td>

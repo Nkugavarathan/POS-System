@@ -24,15 +24,15 @@ function headline(order) {
     case "PLACED":
       return ["We’ve got your order", "The store will confirm it shortly. You’ll get a notification at every step."];
     case "CONFIRMED":
-      return ["Confirmed — packing starts soon", "We’ll show each item here as it goes into your bag."];
+      return ["Confirmed - packing starts soon", "We’ll show each item here as it goes into your bag."];
     case "PACKING":
       return p.pendingSubstitutions > 0
         ? ["Your packer is waiting for you", "Something was out of stock. Approve or refuse the swap below."]
-        : [`Packing now — ${p.resolved} of ${p.total} done`, "This page updates by itself. No need to refresh."];
+        : [`Packing now - ${p.resolved} of ${p.total} done`, "This page updates by itself. No need to refresh."];
     case "READY_FOR_PICKUP":
       return ["Your order is ready!", "Come over any time before the hold ends. Tap “I’m here” when you arrive."];
     case "COLLECTED":
-      return ["Collected — enjoy!", "Thanks for shopping with us. Your receipt and points are on your account."];
+      return ["Collected - enjoy!", "Thanks for shopping with us. Your receipt and points are on your account."];
     case "CANCELLED":
       return ["This order was cancelled", order.cancelReason || "Nothing was charged."];
     case "EXPIRED":
@@ -72,7 +72,7 @@ function OrderView({ number }) {
     mutationFn: ({ itemId, accept }) => shopApi.decide(number, itemId, accept),
     onSuccess: (data, v) => {
       update(data);
-      toast.success(v.accept ? "Swap accepted — thanks!" : "No problem, we’ll leave it out.");
+      toast.success(v.accept ? "Swap accepted - thanks!" : "No problem, we’ll leave it out.");
     },
     onError: (e) => toast.error(errorMessage(e)),
   });
@@ -139,7 +139,7 @@ function OrderView({ number }) {
         <div className="mt-4 flex items-center gap-3 rounded-3xl bg-primary-50 p-4 text-primary-900 ring-1 ring-primary-200">
           <PartyPopper className="h-6 w-6 shrink-0 text-primary" aria-hidden="true" />
           <p className="text-sm">
-            <strong>Order placed.</strong> Keep this page open to watch it being packed — or close it, we&rsquo;ll notify you.
+            <strong>Order placed.</strong> Keep this page open to watch it being packed - or close it, we&rsquo;ll notify you.
           </p>
         </div>
       )}
@@ -228,7 +228,7 @@ function OrderView({ number }) {
               </p>
             )}
             {!finalKnown && !ended && (
-              <p className="mt-1 text-xs text-slate-500">Estimate — the final amount is fixed when packing is done and can only go down.</p>
+              <p className="mt-1 text-xs text-slate-500">Estimate - the final amount is fixed when packing is done and can only go down.</p>
             )}
             <dl className="mt-4 space-y-1.5 text-sm text-slate-600">
               <div className="flex justify-between">

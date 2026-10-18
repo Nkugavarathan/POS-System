@@ -78,7 +78,7 @@ function Register() {
   return (
     <AuthCard
       title="Create your account"
-      subtitle="Takes a minute. No card details needed — you pay in store."
+      subtitle="Takes a minute. No card details needed - you pay in store."
       footer={
         <>
           Already have an account?{" "}
@@ -123,7 +123,7 @@ function Register() {
               </Field>
             </div>
           ) : (
-            <p className="mt-1 pl-6 text-xs text-slate-500">No card? We&rsquo;ll create one — use it at the till to earn points too.</p>
+            <p className="mt-1 pl-6 text-xs text-slate-500">No card? We&rsquo;ll create one - use it at the till to earn points too.</p>
           )}
         </div>
 

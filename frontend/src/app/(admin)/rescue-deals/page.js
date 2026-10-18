@@ -31,7 +31,7 @@ export default function RescueDealsPage() {
     <div>
       <PageHeader
         title="Rescue deals"
-        description="Batches close to their expiry date are marked down automatically every hour — on the till and in the online shop, for this store only."
+        description="Batches close to their expiry date are marked down automatically every hour - on the till and in the online shop, for this store only."
         actions={
           <>
             <Link href="/settings" className="inline-flex h-10 items-center gap-2 rounded-md border border-slate-300 bg-white px-4 text-sm font-medium text-slate-800 hover:bg-slate-50">
@@ -49,7 +49,7 @@ export default function RescueDealsPage() {
         {[
           ["When", "A batch enters the window set by rescue.daysBeforeExpiry (default 3 days)."],
           ["How much", "rescue.discountPercent off (default 30%); rescue.lastDayPercent on the final day (default 50%)."],
-          ["Ends", "When the batch sells out or expires — the deal stops by itself."],
+          ["Ends", "When the batch sells out or expires - the deal stops by itself."],
         ].map(([t, b]) => (
           <Card key={t} className="p-4">
             <p className="text-sm font-semibold text-slate-900">{t}</p>

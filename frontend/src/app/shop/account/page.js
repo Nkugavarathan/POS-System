@@ -26,7 +26,7 @@ function LoyaltyCard({ me }) {
       <div className="mt-6 flex items-end justify-between">
         <div>
           <p className="text-[11px] uppercase tracking-wider text-primary-200">Card</p>
-          <p className="font-mono text-lg tracking-widest">{me.loyaltyCard || "—"}</p>
+          <p className="font-mono text-lg tracking-widest">{me.loyaltyCard || "-"}</p>
         </div>
         <p className="text-sm font-semibold">{me.fullName}</p>
       </div>
@@ -120,7 +120,7 @@ export default function AccountPage() {
           <LoyaltyCard me={m} />
           <p className="flex items-start gap-2 rounded-2xl bg-secondary-50 p-3 text-xs text-secondary-900">
             <Sparkles className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-            Give this card number at the till too — online and in-store purchases earn points on the same card and power your
+            Give this card number at the till too - online and in-store purchases earn points on the same card and power your
             &ldquo;Running low?&rdquo; reminders.
           </p>
           <div className="grid gap-2">

@@ -166,11 +166,11 @@ export default function CustomerPage({ params }) {
             <dl className="space-y-2 text-sm">
               <div>
                 <dt className="text-xs text-slate-500">Mobile</dt>
-                <dd>{c.phone || "—"}</dd>
+                <dd>{c.phone || "-"}</dd>
               </div>
               <div>
                 <dt className="text-xs text-slate-500">Email</dt>
-                <dd>{c.email || "—"}</dd>
+                <dd>{c.email || "-"}</dd>
               </div>
               <div>
                 <dt className="text-xs text-slate-500">Marketing</dt>

@@ -1,6 +1,6 @@
-# 01 — System Architecture
+# 01 - System Architecture
 
-Status: **Phase 1 — approved design baseline** (update via a dated "Decision log" entry at the bottom when something changes).
+Status: **Phase 1 - approved design baseline** (update via a dated "Decision log" entry at the bottom when something changes).
 
 ## 1. Scope and assumptions
 
@@ -90,7 +90,7 @@ Every module may depend on `common`, `audit` and `store`.
 | `payments` | `payments` | Tender validation, change calculation, `PaymentProvider` boundary, refund tender recording |
 | `customers` | `customers`, `loyalty_accounts`, `loyalty_transactions` | Customer records, loyalty ledger, earn and redeem rules |
 | `returns` | `returns`, `return_items`, `refunds` | Returnable-quantity validation, refund calculation, restocking |
-| `reports` | — | Aggregations, CSV export |
+| `reports` | - | Aggregations, CSV export |
 | `audit` | `audit_logs` | Append-only audit trail of sensitive actions |
 
 ## 4. Backend package layout

@@ -370,7 +370,7 @@ export function CloseShiftDialog({ shift, onClosed, onClose }) {
               )}
               <div className="flex justify-between rounded-md bg-slate-50 px-3 py-2 text-sm">
                 <span>Counted</span>
-                <span className="font-semibold tabular">{counted ? formatMoney(counted) : "—"}</span>
+                <span className="font-semibold tabular">{counted ? formatMoney(counted) : "-"}</span>
               </div>
               {counted && (
                 <div className={`flex justify-between rounded-md px-3 py-2 text-sm ${Number(counted) - Number(s.expectedCash) === 0 ? "bg-emerald-50 text-emerald-800" : "bg-secondary-50 text-secondary-900"}`}>

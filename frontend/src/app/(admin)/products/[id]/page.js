@@ -217,7 +217,7 @@ export default function ProductDetailPage({ params }) {
               </Card>
               <Card className="p-4">
                 <p className="text-xs text-slate-500">Cost price</p>
-                <p className="mt-1 text-2xl font-semibold tabular">{product.costPrice != null ? formatMoney(product.costPrice) : "—"}</p>
+                <p className="mt-1 text-2xl font-semibold tabular">{product.costPrice != null ? formatMoney(product.costPrice) : "-"}</p>
                 <p className="text-xs text-slate-500">Updated {formatDateTime(product.updatedAt)}</p>
               </Card>
             </div>

@@ -55,8 +55,8 @@ export default function InventoryDetailPage({ params }) {
               {[
                 ["On hand", `${formatQuantity(s.quantityOnHand)} ${s.unitOfMeasure.toLowerCase()}`, s.lowStock ? "text-red-600" : ""],
                 ["Reorder level", formatQuantity(s.reorderLevel), ""],
-                ["Average cost", s.averageCost != null ? formatMoney(s.averageCost) : "—", ""],
-                ["Stock value", s.stockValue != null ? formatMoney(s.stockValue) : "—", ""],
+                ["Average cost", s.averageCost != null ? formatMoney(s.averageCost) : "-", ""],
+                ["Stock value", s.stockValue != null ? formatMoney(s.stockValue) : "-", ""],
               ].map(([label, value, cls]) => (
                 <Card key={label} className="p-4">
                   <p className="text-xs text-slate-500">{label}</p>
@@ -86,7 +86,7 @@ export default function InventoryDetailPage({ params }) {
                         <tr key={b.id}>
                           <Td className="font-mono">{b.batchNumber}</Td>
                           <Td>
-                            {b.expiryDate ? formatDate(b.expiryDate) : "—"}{" "}
+                            {b.expiryDate ? formatDate(b.expiryDate) : "-"}{" "}
                             {b.expired && <Badge color="red">expired</Badge>}
                             {!b.expired && b.daysToExpiry != null && b.daysToExpiry <= 7 && (
                               <Badge color="amber">{b.daysToExpiry} d</Badge>
@@ -94,7 +94,7 @@ export default function InventoryDetailPage({ params }) {
                           </Td>
                           <Td align="right">{formatQuantity(b.quantityReceived)}</Td>
                           <Td align="right" className="font-medium">{formatQuantity(b.quantityRemaining)}</Td>
-                          <Td align="right">{b.unitCost != null ? formatMoney(b.unitCost) : "—"}</Td>
+                          <Td align="right">{b.unitCost != null ? formatMoney(b.unitCost) : "-"}</Td>
                           <Td>
                             <Badge color={b.status === "ACTIVE" ? "green" : "gray"}>{b.status.toLowerCase()}</Badge>
                           </Td>

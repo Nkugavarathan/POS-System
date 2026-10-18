@@ -80,7 +80,7 @@ function TrackerPreview() {
         ))}
       </ul>
       <div className="mt-4 rounded-2xl bg-secondary-50 p-3 text-xs text-secondary-900">
-        <strong>Brown Bread 450g</strong> instead? Rs 150 — you pay the lower price.
+        <strong>Brown Bread 450g</strong> instead? Rs 150 - you pay the lower price.
       </div>
     </div>
   );
@@ -107,7 +107,7 @@ function Hero() {
             Your basket, <span className="text-secondary">packed while you watch.</span>
           </h1>
           <p className="mt-4 max-w-xl text-base text-primary-50/90">
-            See every item go into your bag in real time, approve any substitute from your phone, and skip the queue — tap
+            See every item go into your bag in real time, approve any substitute from your phone, and skip the queue - tap
             &ldquo;I&rsquo;m here&rdquo; and we bring it to the counter. Pay when you collect.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
@@ -139,7 +139,7 @@ function RescueStrip({ storeId }) {
             </p>
             <h2 className="mt-1 text-2xl font-extrabold text-slate-900">Good food, close to its date</h2>
             <p className="mt-1 max-w-2xl text-sm text-slate-600">
-              These batches are near their best-before date — still perfectly good. Prices drop automatically as the date
+              These batches are near their best-before date - still perfectly good. Prices drop automatically as the date
               gets closer{best ? `; save up to Rs ${best} an item` : ""}. Fewer bins, lower bills.
             </p>
           </div>
@@ -174,7 +174,7 @@ function RunningLow({ storeId }) {
           <div className="flex-1">
             <p className="font-bold text-slate-900">Already shop with us in store?</p>
             <p className="text-sm text-slate-600">
-              Connect your loyalty card and we&rsquo;ll learn your rhythm from your till receipts — then remind you before you
+              Connect your loyalty card and we&rsquo;ll learn your rhythm from your till receipts - then remind you before you
               run out of milk, rice or soap.
             </p>
           </div>
@@ -194,7 +194,7 @@ function RunningLow({ storeId }) {
             <CalendarClock className="h-4 w-4" aria-hidden="true" /> Running low?
           </p>
           <h2 className="mt-1 text-2xl font-extrabold text-slate-900">Your usuals, right on time</h2>
-          <p className="mt-1 text-sm text-slate-600">Predicted from how often you buy them — online and at the till.</p>
+          <p className="mt-1 text-sm text-slate-600">Predicted from how often you buy them - online and at the till.</p>
         </div>
       </div>
       <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -236,7 +236,7 @@ function RunningLow({ storeId }) {
 
 function Promises() {
   const items = [
-    { icon: PackageCheck, title: "Live packing", body: "Follow your bag item by item, like a parcel — but in minutes." },
+    { icon: PackageCheck, title: "Live packing", body: "Follow your bag item by item, like a parcel - but in minutes." },
     { icon: ShieldCheck, title: "Never pay more", body: "Out of something? We offer a swap; you approve it and pay the lower price." },
     { icon: BellRing, title: "I'm here", body: "Check in from the car park and we have your bags at the counter." },
     { icon: Repeat, title: "One loyalty card", body: "Points and history shared between the till and the app." },
