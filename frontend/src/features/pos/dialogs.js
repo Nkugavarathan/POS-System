@@ -3,12 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Printer, UserPlus } from "lucide-react";
+import { Download, Printer, UserPlus } from "lucide-react";
 import { Modal } from "@/components/ui/dialog";
 import { Checkbox, Field, Input, Select } from "@/components/ui/form";
 import { Alert, Badge, EmptyState, Spinner } from "@/components/ui/feedback";
 import { Button } from "@/components/ui/button";
 import { Receipt } from "@/features/sales/receipt";
+import { downloadReceiptPdf, printReceipt } from "@/features/sales/receipt-output";
 import { ApprovalDialog } from "@/features/auth/approval-dialog";
 import { newIdempotencyKey } from "@/lib/idempotency";
 import { parseAmount, parseQuantity } from "@/lib/money";
@@ -402,7 +403,10 @@ export function ReceiptDialog({ sale, onClose, onNewSale, paper = "80mm" }) {
     <Modal open onOpenChange={(o) => !o && onClose()} title={`Sale complete · ${sale.receiptNumber}`} size="md"
       footer={
         <>
-          <Button variant="outline" onClick={() => window.print()}>
+          <Button variant="outline" onClick={() => downloadReceiptPdf(sale)}>
+            <Download className="h-4 w-4" aria-hidden="true" /> Download
+          </Button>
+          <Button variant="outline" onClick={() => printReceipt(sale)}>
             <Printer className="h-4 w-4" aria-hidden="true" /> Print
           </Button>
           {onNewSale && (

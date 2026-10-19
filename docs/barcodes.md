@@ -54,3 +54,12 @@ Test the POS without a scanner by typing any of these into the search box and pr
 | `2100000010462` | SHAMPOO-180 | Shampoo 180ml |
 
 Weighed items (per kg) ask for the weight after scanning. Milk, yogurt, cheese, bread, buns and butter cake are batch-tracked with expiry dates; one butter cake batch is seeded as already expired, to demonstrate expiry alerts and first-expiry-first-out allocation.
+
+## Real packs for live scanning
+
+These two products use the barcodes printed on real packs, so you can scan the physical item with the laptop camera or a USB scanner (store CMB01 has opening stock).
+
+| Product | Barcode | Type | Price |
+|---|---|---|---|
+| Pond's Magic Freshness Talc Acacia Honey 100g | 4792081468713 | EAN-13 | Rs 300.00 |
+| Macks LED Bulb 12W (MKA12W) | MKA12W052301 | Code 128 | Rs 500.00 |

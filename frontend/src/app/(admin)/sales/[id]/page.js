@@ -4,11 +4,12 @@ import { use } from "react";
 import Link from "next/link";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { ArrowLeft, Printer, RotateCcw } from "lucide-react";
+import { ArrowLeft, Download, Printer, RotateCcw } from "lucide-react";
 import { Card, CardHeader, PageHeader, Table, Td, Th } from "@/components/ui/layout";
 import { Badge, ErrorState, Skeleton } from "@/components/ui/feedback";
 import { Button } from "@/components/ui/button";
 import { Receipt } from "@/features/sales/receipt";
+import { downloadReceiptPdf, printReceipt } from "@/features/sales/receipt-output";
 import { useMe } from "@/features/auth/hooks";
 import { returnsApi, salesApi } from "@/features/backoffice/api";
 import { errorMessage } from "@/lib/api-error";
@@ -27,8 +28,8 @@ export default function SaleDetailPage({ params }) {
     mutationFn: () => salesApi.reprint(saleId),
     onSuccess: (data) => {
       queryClient.setQueryData(["sales", saleId], data);
-      // Print after React renders the "REPRINT" copy.
-      setTimeout(() => window.print(), 100);
+      // The server marks it as a reprint; print that copy only (not the page).
+      printReceipt(data);
     },
     onError: (e) => toast.error(errorMessage(e)),
   });
@@ -49,6 +50,9 @@ export default function SaleDetailPage({ params }) {
           description={`${formatDateTime(s.completedAt)} · ${s.cashierName} · ${s.registerCode}${s.onlineOrderNumber ? ` · online order #${s.onlineOrderNumber}` : ""}`}
           actions={
             <>
+              <Button variant="outline" onClick={() => downloadReceiptPdf(s)}>
+                <Download className="h-4 w-4" aria-hidden="true" /> Download PDF
+              </Button>
               <Button variant="outline" loading={reprint.isPending} onClick={() => reprint.mutate()}>
                 <Printer className="h-4 w-4" aria-hidden="true" /> Reprint
               </Button>

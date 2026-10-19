@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { CameraOff, RefreshCw, ScanBarcode, SwitchCamera } from "lucide-react";
+import { CameraOff, Flashlight, RefreshCw, ScanBarcode, SwitchCamera, ZoomIn } from "lucide-react";
 import { Modal } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Alert } from "@/components/ui/feedback";
 import { Input, Select } from "@/components/ui/form";
-import { useBarcodeScanner } from "./use-barcode-scanner";
+import { SCAN_REGION, useBarcodeScanner } from "./use-barcode-scanner";
 
 /**
  * Camera scanning dialog. Each detected code is passed to `onScan(code, format)`; the dialog
@@ -44,10 +44,21 @@ export function ScannerDialog({ open, onClose, onScan, lastResult, createReader 
           </Alert>
         ) : (
           <div className="relative overflow-hidden rounded-lg bg-slate-900">
-            <video ref={scanner.videoRef} className="aspect-video w-full object-cover" muted playsInline aria-label="Camera preview" />
-            {/* Scanning frame */}
+            {/* Front cameras are shown mirrored so aiming feels natural; decoding uses the raw frames. */}
+            <video
+              ref={scanner.videoRef}
+              className="block h-auto min-h-48 w-full"
+              style={scanner.mirrored ? { transform: "scaleX(-1)" } : undefined}
+              muted
+              playsInline
+              aria-label="Camera preview"
+            />
+            {/* Scanning frame = exactly the area that is decoded. */}
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-              <div className="relative h-1/3 w-3/4 rounded-md border-2 border-secondary shadow-[0_0_0_9999px_rgba(15,23,42,0.45)]">
+              <div
+                className="relative rounded-md border-2 border-secondary shadow-[0_0_0_9999px_rgba(15,23,42,0.45)]"
+                style={{ width: `${SCAN_REGION.width * 100}%`, height: `${SCAN_REGION.height * 100}%` }}
+              >
                 {scanner.status === "scanning" && (
                   <div className="absolute inset-x-2 top-1/2 h-0.5 animate-pulse bg-red-500/80" aria-hidden="true" />
                 )}
@@ -57,6 +68,13 @@ export function ScannerDialog({ open, onClose, onScan, lastResult, createReader 
               <p className="absolute inset-x-0 bottom-3 text-center text-sm text-white">Starting camera…</p>
             )}
           </div>
+        )}
+
+        {!scanner.error && (
+          <p className="text-xs text-slate-500">
+            Tip: hold the pack 15-25 cm away so the barcode is sharp and spans about half the frame. Laptop cameras
+            cannot focus very close - if the bars look blurry, move it back a little. Avoid glare on shiny packs.
+          </p>
         )}
 
         {lastResult && (
@@ -81,6 +99,27 @@ export function ScannerDialog({ open, onClose, onScan, lastResult, createReader 
                 ))}
               </Select>
             </label>
+          )}
+          {scanner.zoom && (
+            <label className="flex items-center gap-2 text-sm text-slate-600">
+              <ZoomIn className="h-4 w-4" aria-hidden="true" />
+              <span className="sr-only">Zoom</span>
+              <input
+                type="range"
+                min={scanner.zoom.min}
+                max={scanner.zoom.max}
+                step={scanner.zoom.step}
+                value={scanner.zoom.value}
+                onChange={(e) => scanner.setZoom(Number(e.target.value))}
+                className="w-32 accent-[var(--primary)]"
+                aria-label="Camera zoom"
+              />
+            </label>
+          )}
+          {scanner.torch !== null && (
+            <Button variant={scanner.torch ? "secondary" : "outline"} size="sm" onClick={scanner.toggleTorch} aria-pressed={scanner.torch}>
+              <Flashlight className="h-4 w-4" aria-hidden="true" /> Light
+            </Button>
           )}
           <Button variant="outline" size="sm" onClick={scanner.resetCooldown}>
             <ScanBarcode className="h-4 w-4" aria-hidden="true" /> Scan same item again
