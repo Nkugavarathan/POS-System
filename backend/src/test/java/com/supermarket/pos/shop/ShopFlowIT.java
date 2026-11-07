@@ -220,4 +220,24 @@ class ShopFlowIT {
         // Running again does not duplicate the deal.
         assertThat(rescue.run(storeId).created()).isZero();
     }
+
+    @Test
+    void aLapsedRescueDealIsSwitchedOffAndTheBatchCanGetANewOne() throws Exception {
+        Long cheese = data.product("EACH", "200.00", true);
+        tx.executeWithoutResult(s -> inventory.receive(storeId, MovementType.PURCHASE_RECEIPT,
+                new InventoryService.Reference("GOODS_RECEIPT", System.nanoTime(), staff.id(), "test"),
+                List.of(new InventoryService.Receipt(cheese, new BigDecimal("4"), new BigDecimal("90"), "C-1",
+                        LocalDate.now().plusDays(1), 1L, null, null))));
+        assertThat(rescue.run(storeId).created()).isGreaterThanOrEqualTo(1);
+        // The deal's end time passes while it is still flagged active (e.g. the expiry date is later corrected).
+        jdbc.update("""
+                UPDATE product_promotions SET starts_at = DATE_SUB(UTC_TIMESTAMP(6), INTERVAL 2 DAY), ends_at = DATE_SUB(UTC_TIMESTAMP(6), INTERVAL 1 HOUR)
+                WHERE source = 'RESCUE' AND product_id = ?""", cheese);
+        var again = rescue.run(storeId);
+        assertThat(again.ended()).isGreaterThanOrEqualTo(1);
+        Integer running = jdbc.queryForObject("""
+                SELECT COUNT(*) FROM product_promotions WHERE source = 'RESCUE' AND product_id = ? AND active = TRUE
+                  AND ends_at > UTC_TIMESTAMP(6)""", Integer.class, cheese);
+        assertThat(running).isEqualTo(1);
+    }
 }

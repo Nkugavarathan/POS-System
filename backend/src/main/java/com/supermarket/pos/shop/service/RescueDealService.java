@@ -78,7 +78,9 @@ public class RescueDealService {
         BigDecimal percent = settings.decimal(storeId, "rescue.discountPercent", new BigDecimal("30"));
         BigDecimal lastDay = settings.decimal(storeId, "rescue.lastDayPercent", new BigDecimal("50"));
 
-        int ended = 0;
+        // Deals past their end time are switched off, so a batch can get a fresh deal later
+        // (e.g. after its expiry date was corrected).
+        int ended = products.closeLapsedRescue(storeId, now);
         for (ProductPromotion promo : products.runningRescue(storeId, now)) {
             InventoryBatch batch = promo.getBatchId() == null ? null : inventory.batch(promo.getBatchId()).orElse(null);
             boolean soldOut = batch == null || batch.getQuantityRemaining().signum() == 0;
@@ -93,7 +95,7 @@ public class RescueDealService {
         int created = 0;
         List<InventoryBatch> soon = inventory.expiringBatches(storeId, today.plusDays(window));
         for (InventoryBatch b : soon) {
-            if (b.getExpiryDate() == null || b.getExpiryDate().isBefore(today) || products.hasActiveRescue(b.getId())) {
+            if (b.getExpiryDate() == null || b.getExpiryDate().isBefore(today) || products.hasActiveRescue(b.getId(), now)) {
                 continue;
             }
             long daysLeft = ChronoUnit.DAYS.between(today, b.getExpiryDate());

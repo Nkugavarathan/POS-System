@@ -220,9 +220,18 @@ public class ProductService implements CategoryUsage {
         return promotions.findRunningRescue(storeId, now);
     }
 
+    /** True when the batch already has a rescue deal that is still running at {@code now}. */
     @Transactional(readOnly = true)
-    public boolean hasActiveRescue(Long batchId) {
-        return promotions.existsByBatchIdAndSourceAndActiveTrue(batchId, "RESCUE");
+    public boolean hasActiveRescue(Long batchId, Instant now) {
+        return promotions.existsByBatchIdAndSourceAndActiveTrueAndEndsAtAfter(batchId, "RESCUE", now);
+    }
+
+    /** Switches off rescue deals whose end time has passed; returns how many. */
+    @Transactional
+    public int closeLapsedRescue(Long storeId, Instant now) {
+        List<ProductPromotion> lapsed = promotions.findLapsedRescue(storeId, now);
+        lapsed.forEach(p -> p.setActive(false));
+        return lapsed.size();
     }
 
     /** Creates a store-only promotion for one near-expiry batch (system generated, audited by the caller). */

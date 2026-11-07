@@ -28,7 +28,15 @@ public interface ProductPromotionRepository extends JpaRepository<ProductPromoti
             """)
     List<ProductPromotion> findRunningRescue(@Param("storeId") Long storeId, @Param("now") Instant now);
 
-    boolean existsByBatchIdAndSourceAndActiveTrue(Long batchId, String source);
+    /** A running (active and not yet ended) rescue deal for this batch. */
+    boolean existsByBatchIdAndSourceAndActiveTrueAndEndsAtAfter(Long batchId, String source, Instant now);
+
+    /** Rescue deals whose end time has passed but are still flagged active. */
+    @Query("""
+            select pr from ProductPromotion pr
+            where pr.source = 'RESCUE' and pr.active = true and pr.storeId = :storeId and pr.endsAt <= :now
+            """)
+    List<ProductPromotion> findLapsedRescue(@Param("storeId") Long storeId, @Param("now") Instant now);
 
     List<ProductPromotion> findByProductIdOrderByStartsAtDesc(Long productId);
 }

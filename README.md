@@ -4,7 +4,7 @@ A supermarket point-of-sale and back-office system: cashier checkout with laptop
 
 This is an independent implementation. It uses no proprietary code, branding or assets from any retailer. Store, staff, brand and product data in the development seed is invented.
 
-> **Status:** phases 1–10 and the online shop are built and covered by integration tests (see the [implementation plan](docs/05-implementation-plan.md)). Hardening (Phase 11) and production deployment docs (Phase 12) are still open. **This project is not production-ready.** That needs the security review, a real email/SMS provider, HTTPS deployment and payment-terminal verification listed in the plan.
+> **Status:** phases 1-10 and the online shop are built and covered by integration tests (see the [implementation plan](docs/05-implementation-plan.md)). Hardening (Phase 11) and production deployment docs (Phase 12) are still open. **This project is not production-ready.** That needs the security review, a real email/SMS provider, HTTPS deployment and payment-terminal verification listed in the plan.
 
 ## What's inside
 
@@ -16,6 +16,28 @@ This is an independent implementation. It uses no proprietary code, branding or 
   - **Substitution approval:** the customer accepts or refuses a swap and never pays more.
   - **"I'm here" check-in:** shows up on the board and at the till.
   - **One loyalty card** across the till and the app, plus "Running low?" reminders.
+
+## Screenshots
+
+### Online shop
+
+| Home | Rescue deals |
+|---|---|
+| ![Shop home page with the live packing preview](docs/screenshots/shop-home.png) | ![Near-expiry rescue deals on the shop home page](docs/screenshots/shop-rescue-deals.png) |
+| **Basket with swap or skip choice** | **Create an account** |
+| ![Basket with rescue prices and substitution choices](docs/screenshots/shop-basket.png) | ![Customer registration form](docs/screenshots/shop-register.png) |
+
+### Point of sale
+
+![POS till with scan button, totals and shortcut keys](docs/screenshots/pos-terminal.png)
+
+### Back office
+
+| Dashboard | Rescue deals |
+|---|---|
+| ![Back-office dashboard with KPIs and alerts](docs/screenshots/admin-dashboard.png) | ![Rescue deals running at the store](docs/screenshots/admin-rescue-deals.png) |
+| **Products** | **Categories** |
+| ![Product catalog with prices and stock](docs/screenshots/admin-products.png) | ![Category tree](docs/screenshots/admin-categories.png) |
 
 ## Stack
 
